@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Adda — Real-Time Brand Strategy & Identity Studio</title>
+  <style>
+    :root {
+      --bg-paper: #FAF7F2;
+      --bg-card: #FFFFFF;
+      --bg-dark: #141619;
+      --bg-muted: #F1ECE4;
+      --text-ink: #17191C;
+      --text-secondary: #565B63;
+      --accent: #E04F26;
+      --accent-hover: #C63F19;
+      --accent-soft: #FDECE7;
+      --teal: #1D7A6E;
+      --teal-soft: #E5F4F1;
+      --purple: #5E43B2;
+      --purple-soft: #EFEBFD;
+      --border: #E5DFD5;
+      --shadow-sm: 0 2px 8px rgba(20, 22, 25, 0.05);
+      --shadow-md: 0 10px 30px rgba(20, 22, 25, 0.08);
+      --radius: 14px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-serif: Georgia, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-paper);
+      color: var(--text-ink);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 278px;
+      background: var(--bg-dark);
+      color: #F4F1EA;
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 18px;
+    }
+
+    .logo-mark {
+      width: 42px; height: 42px; border-radius: 10px; background: var(--accent);
+      display: grid; place-items: center; font-family: var(--font-serif);
+      font-weight: 700; font-size: 20px; color: #FFF; flex-shrink: 0;
+    }
+
+    .logo-text h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.2; }
+    .logo-text span { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: #A6AAB2; }
+
+    .nav-group-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1.3px;
+      color: #7D828C; margin: 14px 12px 8px; font-weight: 600;
+    }
+
+    .nav-btn {
+      width: 100%; background: transparent; border: none; color: #D2D5DB;
+      padding: 10px 13px; border-radius: 10px; display: flex; align-items: center;
+      gap: 10px; font-size: 14px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s ease; text-align: left; margin-bottom: 4px;
+    }
+
+    .nav-btn:hover { background: rgba(255,255,255,0.08); color: #FFF; }
+    .nav-btn.active { background: var(--accent); color: #FFF; font-weight: 600; }
+
+    .nav-badge {
+      margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 99px;
+      background: rgba(255,255,255,0.14); color: #FFF;
+    }
+
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #2ECC71;
+      display: inline-block; box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+      70% { box-shadow: 0 0 0 7px rgba(46, 204, 113, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+    }
+
+    .sidebar-footer {
+      margin-top: auto; padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12); font-size: 12px; color: #9CA1AA;
+    }
+
+    .rank-pill {
+      display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 99px;
+      background: rgba(217, 155, 38, 0.2); color: #F5C451; font-weight: 600; font-size: 11px;
+    }
+
+    .main { margin-left: 278px; flex: 1; padding: 34px 42px; max-width: 1260px; width: 100%; }
+
+    .mobile-header {
+      display: none; background: var(--bg-dark); color: #FFF; padding: 14px 18px;
+      align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 90;
+    }
+
+    .page-header {
+      margin-bottom: 26px; display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: flex-end; gap: 16px;
+    }
+
+    .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+    .page-title { font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.15; letter-spacing: -0.5px; }
+    .page-subtitle { color: var(--text-secondary); font-size: 15px; margin-top: 6px; max-width: 700px; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 22px; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card.clickable:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); cursor: pointer; }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #181B20 0%, #2B2420 100%);
+      color: #FFF; border-radius: 18px; padding: 28px 32px; margin-bottom: 26px;
+      display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+
+    .hero-quote { font-family: var(--font-serif); font-size: 22px; line-height: 1.35; max-width: 650px; }
+    .hero-author { margin-top: 8px; font-size: 13px; color: #C7BEB3; }
+
+    .stat-num { font-size: 30px; font-weight: 800; line-height: 1.1; margin: 6px 0; }
+    .progress-bar-bg { height: 8px; background: var(--bg-muted); border-radius: 99px; overflow: hidden; margin-top: 10px; }
+    .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s ease; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px;
+      border-radius: 10px; border: none; font-size: 13.5px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s ease; text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #FFF; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--bg-muted); color: var(--text-ink); }
+    .btn-secondary:hover { background: #E4DDD2; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-ink); }
+    .btn-outline:hover { background: var(--bg-muted); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
+
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+    .pill-orange { background: var(--accent-soft); color: var(--accent); }
+    .pill-teal { background: var(--teal-soft); color: var(--teal); }
+    .pill-purple { background: var(--purple-soft); color: var(--purple); }
+    .pill-gray { background: var(--bg-muted); color: var(--text-secondary); }
+
+    .live-status-bar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 14px 18px; border-radius: 12px; background: #FFF;
+      border: 1px solid var(--border); margin-bottom: 20px; font-size: 13px;
+    }
+
+    .trend-card { display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+    .wheeler-tag-box { padding: 10px 12px; border-radius: 10px; background: var(--bg-paper); border-left: 3px solid var(--purple); font-size: 12.5px; }
+
+    .phase-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .phase-tab {
+      flex: 1; min-width: 155px; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 16px; text-align: left; cursor: pointer;
+    }
+    .phase-tab.active { border-color: var(--accent); background: var(--accent-soft); }
+    .phase-tab .phase-num { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); }
+    .phase-tab .phase-name { font-weight: 700; font-size: 14px; margin-top: 2px; }
+
+    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-paper); margin-bottom: 10px; cursor: pointer; }
+    .checklist-item input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent); }
+    .checklist-item.done span { text-decoration: line-through; color: var(--text-secondary); }
+
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 22px; }
+    .search-input { flex: 1; min-width: 230px; padding: 10px 15px; border-radius: 10px; border: 1px solid var(--border); background: #FFF; font-size: 14px; }
+    .filter-chip { padding: 7px 14px; border-radius: 99px; border: 1px solid var(--border); background: #FFF; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-secondary); }
+    .filter-chip.active { background: var(--bg-dark); color: #FFF; border-color: var(--bg-dark); }
+
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(17, 19, 21, 0.65); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 200; }
+    .modal-backdrop.open { display: flex; }
+    .modal-content { background: #FFF; border-radius: 18px; max-width: 740px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 30px; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
+    .modal-close { position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: #FFF; font-size: 18px; cursor: pointer; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    .form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 14px; background: #FFF; }
+    textarea.form-control { min-height: 78px; resize: vertical; }
+
+    .brief-preview { background: #17191C; color: #F4F1EA; padding: 26px; border-radius: 14px; font-size: 14px; }
+    .brief-preview h3 { font-family: var(--font-serif); font-size: 21px; color: #FFF; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 10px; }
+    .brief-field { margin-bottom: 12px; }
+    .brief-field small { display: block; text-transform: uppercase; letter-spacing: 1px; color: #E04F26; font-weight: 700; font-size: 11px; }
+
+    .quiz-option { display: block; width: 100%; text-align: left; padding: 13px 16px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--border); background: #FFF; font-size: 14px; cursor: pointer; }
+    .quiz-option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+    .quiz-option.correct { background: #E5F4F1; border-color: #1D7A6E; color: #114D45; font-weight: 600; }
+    .quiz-option.wrong { background: #FDECE7; border-color: #E04F26; color: #9E2E10; }
+
+    .section-view { display: none; }
+    .section-view.active { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-header { display: flex; }
+      .main { margin-left: 0; padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="mobile-header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="logo-mark" style="width:32px;height:32px;font-size:15px;">MA</div>
+      <strong>Marketing Adda</strong>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="toggleSidebar()">Menu</button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-logo">
+      <div class="logo-mark">MA</div>
+      <div class="logo-text">
+        <h1>Marketing Adda</h1>
+        <span>Live Brand Studio</span>
+      </div>
+    </div>
+
+    <div class="nav-group-label">Real-Time Intelligence</div>
+    <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+      <span>🏠</span> The Adda (Home)
+    </button>
+    <button class="nav-btn" data-tab="live" onclick="switchTab('live')">
+      <span class="live-dot"></span> Live Trend Pulse
+      <span class="nav-badge" id="badge-live">0</span>
+    </button>
+
+    <div class="nav-group-label">6th Ed. Academy</div>
+    <button class="nav-btn" data-tab="basics" onclick="switchTab('basics')">
+      <span>📘</span> Part 1: Brand Basics
+    </button>
+    <button class="nav-btn" data-tab="process" onclick="switchTab('process')">
+      <span>🧭</span> Part 2: 5-Phase Process
+      <span class="nav-badge" id="badge-process">0%</span>
+    </button>
+
+    <div class="nav-group-label">Vault & Practice</div>
+    <button class="nav-btn" data-tab="campaigns" onclick="switchTab('campaigns')">
+      <span>🏆</span> Campaign Vault
+      <span class="nav-badge" id="badge-vault">10</span>
+    </button>
+    <button class="nav-btn" data-tab="lab" onclick="switchTab('lab')">
+      <span>🛠️</span> Strategist Lab
+    </button>
+    <button class="nav-btn" data-tab="quiz" onclick="switchTab('quiz')">
+      <span>⚡</span> Adda Challenge
+    </button>
+
+    <div class="sidebar-footer">
+      <div>Rooted in <strong>Designing Brand Identity (6th Ed.)</strong> by Alina Wheeler & Rob Meyerson</div>
+      <div class="rank-pill" id="strategist-rank">Rank: Curious Apprentice</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section id="view-home" class="section-view active">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Real-Time Brand & Startup Studio</div>
+          <h2 class="page-title">Master Brand Identity as Markets Move</h2>
+          <p class="page-subtitle">Learn Alina Wheeler’s 6th Edition framework while tracking booming startups, rebrands, and viral campaigns in real time.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="syncLiveTrends(true)">↻ Sync Live Now</button>
+          <button class="btn btn-primary" onclick="switchTab('live')">Open Live Pulse →</button>
+        </div>
+      </div>
+
+      <div class="hero-banner">
+        <div>
+          <div class="eyebrow" style="color:#F5C451;">Strategist North Star</div>
+          <div class="hero-quote" id="daily-quote">“Design is intelligence made visible.”</div>
+          <div class="hero-author">— Alina Wheeler, Designing Brand Identity</div>
+        </div>
+        <button class="btn btn-secondary" onclick="cycleQuote()">New Insight ↻</button>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 28px;">
+        <div class="card">
+          <div class="pill pill-purple">Live Radar</div>
+          <div class="stat-num" id="home-live-count">0 Signals</div>
+          <p style="font-size:13px;color:var(--text-secondary);" id="home-live-status">Connecting to live engine...</p>
+          <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="switchTab('live')">Inspect Trending Stories →</button>
+        </div>
+
+        <div class="card">
+          <div class="pill pill-orange">Process Mastery</div>
+          <div class="stat-num" id="home-checklist-pct">0%</div>
+          <p style="font-size:13px;color:var(--text-secondary);">Deliverables mastered across Wheeler’s 5 Phases</p>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="home-progress-bar" style="width:0%"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="pill pill-teal">Adaptive Vault</div>
+          <div class="stat-num" id="home-cases-read">0 / 10</div>
+          <p style="font-size:13px;color:var(--text-secondary);">Iconic + pinned live campaigns dissected</p>
+          <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="switchTab('campaigns')">Open Vault →</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+        <h3 style="font-family:var(--font-serif);font-size:22px;">🔥 Booming Now — Auto-Adapted Signals</h3>
+        <a href="javascript:void(0)" onclick="switchTab('live')" style="font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;">View All Live Signals →</a>
+      </div>
+      <div class="grid-3" id="home-live-preview"></div>
+    </section>
+
+    <section id="view-live" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Auto-Adapting Market Radar</div>
+          <h2 class="page-title">Live Startup & Brand Campaign Pulse</h2>
+          <p class="page-subtitle">Automatically pulls booming Indian & global startup news, ad campaigns, and rebrands—mapping every story to Wheeler’s 5-Phase framework.</p>
+        </div>
+        <button class="btn btn-primary" id="sync-btn" onclick="syncLiveTrends(true)">↻ Sync Live Now</button>
+      </div>
+
+      <div class="live-status-bar">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="live-dot"></span>
+          <span id="live-sync-meta">Initializing real-time feeds...</span>
+        </div>
+        <div style="color:var(--text-secondary);font-size:12px;" id="engine-mode-badge">Auto-syncs every 5 min</div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="search-input" id="live-search" placeholder="Filter live trends (e.g., Zepto, AI, Rebrand, D2C, Packaging, Funding)..." oninput="renderLiveTrends()" />
+        <button class="filter-chip active" onclick="setLiveFilter('all', this)">All Signals</button>
+        <button class="filter-chip" onclick="setLiveFilter('Campaign', this)">📢 Campaigns & Ads</button>
+        <button class="filter-chip" onclick="setLiveFilter('Startup', this)">🚀 Booming Startups</button>
+        <button class="filter-chip" onclick="setLiveFilter('Rebrand', this)">🎨 Identity & Rebrands</button>
+      </div>
+
+      <div class="grid-2" id="live-trends-grid"></div>
+    </section>
+
+    <section id="view-basics" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Part 1 · Designing Brand Identity (6th Ed.)</div>
+          <h2 class="page-title">Brand Fundamentals & Modern Dynamics</h2>
+          <p class="page-subtitle">Master the shared language of brands, identity taxonomy, and 6th Edition forces shaping modern startups.</p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-chip active" onclick="filterBasics('all', this)">All Concepts</button>
+        <button class="filter-chip" onclick="filterBasics('fundamentals', this)">Brand Fundamentals</button>
+        <button class="filter-chip" onclick="filterBasics('elements', this)">Identity Elements</button>
+        <button class="filter-chip" onclick="filterBasics('dynamics', this)">6th Ed. Dynamics</button>
+      </div>
+
+      <div class="grid-2" id="basics-grid"></div>
+    </section>
+
+    <section id="view-process" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Part 2 · Universal 5-Phase Methodology</div>
+          <h2 class="page-title">The Brand Identity Process</h2>
+          <p class="page-subtitle">Follow Alina Wheeler’s disciplined roadmap from Phase 1 Research through Phase 5 Asset Governance.</p>
+        </div>
+      </div>
+
+      <div class="phase-tabs" id="phase-tabs"></div>
+      <div id="phase-detail-container"></div>
+    </section>
+
+    <section id="view-campaigns" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Curated + Live-Adapted Case Studies</div>
+          <h2 class="page-title">Top Marketing Success Stories & Campaigns</h2>
+          <p class="page-subtitle">Study iconic Indian and global case studies alongside live trends you have adapted and pinned from Live Pulse.</p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="search-input" id="campaign-search" placeholder="Search brands, insights, or Wheeler phases..." oninput="renderCampaigns()" />
+        <button class="filter-chip active" onclick="setCampaignFilter('all', this)">All</button>
+        <button class="filter-chip" onclick="setCampaignFilter('India', this)">🇮🇳 Indian Icons</button>
+        <button class="filter-chip" onclick="setCampaignFilter('Global', this)">🌍 Global Icons</button>
+        <button class="filter-chip" onclick="setCampaignFilter('Rebrand', this)">🔄 Rebrands</button>
+        <button class="filter-chip" onclick="setCampaignFilter('Live-Pinned', this)">⚡ Adapted Live</button>
+      </div>
+
+      <div class="grid-2" id="campaigns-grid"></div>
+    </section>
+
+    <section id="view-lab" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Hands-On Practice · Phase 1 & Phase 2 Tools</div>
+          <h2 class="page-title">The Brand Strategist Lab</h2>
+          <p class="page-subtitle">Craft a Phase 2 Brand Brief or run a quick Brand Identity Readiness Audit on any trending startup.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3>1. Phase 2 Brand Brief Builder</h3>
+            <button class="btn btn-secondary btn-sm" onclick="loadSampleBrief()">Load Sample (D2C Chai)</button>
+          </div>
+          <div class="form-group">
+            <label>Brand Name & Category</label>
+            <input type="text" class="form-control" id="brief-name" placeholder="e.g., Tapri Craft — Artisanal Instant Chai" oninput="updateBriefPreview()" />
+          </div>
+          <div class="form-group">
+            <label>Target Audience</label>
+            <input type="text" class="form-control" id="brief-audience" placeholder="e.g., Urban Gen Z & Millennials craving authentic kadak chai" oninput="updateBriefPreview()" />
+          </div>
+          <div class="form-group">
+            <label>Positioning / Point of Difference</label>
+            <textarea class="form-control" id="brief-pod" placeholder="e.g., Single-estate Assam tea + crushed spices in 30 seconds." oninput="updateBriefPreview()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Brand Personality & Voice</label>
+            <input type="text" class="form-control" id="brief-tone" placeholder="e.g., Warm, Witty, Unpretentious, Rooted" oninput="updateBriefPreview()" />
+          </div>
+          <div class="form-group">
+            <label>Big Idea / Tagline Territory</label>
+            <input type="text" class="form-control" id="brief-tagline" placeholder="e.g., Street Soul. Studio Craft." oninput="updateBriefPreview()" />
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="copyBrief()">Copy Brief</button>
+            <button class="btn btn-outline" onclick="clearBrief()">Reset</button>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <div class="brief-preview">
+            <h3>Strategic Brand Brief</h3>
+            <div class="brief-field"><small>Brand</small><div id="prev-name">—</div></div>
+            <div class="brief-field"><small>Target Audience</small><div id="prev-audience">—</div></div>
+            <div class="brief-field"><small>Positioning Statement</small><div id="prev-pod">—</div></div>
+            <div class="brief-field"><small>Tone & Personality</small><div id="prev-tone">—</div></div>
+            <div class="brief-field"><small>Tagline Territory</small><div id="prev-tagline">—</div></div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:6px;">2. Quick Brand Audit Scorecard</h3>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Rate any brand (1 = Weak, 5 = Iconic) on Wheeler's Brand Ideals.</p>
+            <div id="audit-sliders"></div>
+            <div style="margin-top:16px;padding:14px;background:var(--bg-muted);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+              <strong>Brand Equity Score:</strong>
+              <span id="audit-total" style="font-size:20px;font-weight:800;color:var(--accent);">15 / 25</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-quiz" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">Test Your Strategist Instincts</div>
+          <h2 class="page-title">The Adda Challenge</h2>
+          <p class="page-subtitle">10 scenario-based questions combining <em>Designing Brand Identity (6th Ed.)</em> with real campaign strategy.</p>
+        </div>
+        <button class="btn btn-outline" onclick="resetQuiz()">Restart Quiz ↻</button>
+      </div>
+      <div class="card" style="max-width:780px;" id="quiz-container"></div>
+    </section>
+
+  </main>
+
+  <div class="modal-backdrop" id="app-modal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    const QUOTES = [
+      { q: "“Design is intelligence made visible.”", a: "Alina Wheeler, Designing Brand Identity" },
+      { q: "“As competition creates infinite choices, companies look for ways to connect emotionally with customers, become irreplaceable, and create lifelong relationships.”", a: "Alina Wheeler, Designing Brand Identity (6th Ed.)" },
+      { q: "“Identities that would have once lasted 20 years are now revised after just five.”", a: "Alina Wheeler & Rob Meyerson, 6th Edition Preface" },
+      { q: "“Look into a microscope with one eye and a telescope with the other.”", a: "Blake Deutsch, Phase 2: Clarifying Strategy" }
+    ];
+
+    const BASICS_DATA = [
+      {
+        cat: "fundamentals", badge: "Fundamentals",
+        title: "Brand vs. Brand Identity vs. Branding",
+        summary: "Three terms often confused by rookies—and sharply separated by strategists.",
+        points: [
+          "<strong>Brand:</strong> The gut feeling people have about a product or organization. Your audience owns it.",
+          "<strong>Brand Identity:</strong> The tangible, sensory expression—logos, colors, typography, voice, packaging, sound.",
+          "<strong>Branding:</strong> The continuous, disciplined process of building awareness and extending loyalty."
+        ]
+      },
+      {
+        cat: "fundamentals", badge: "Fundamentals",
+        title: "The 9 Brand Ideals (Wheeler Framework)",
+        summary: "What separates forgettable startups from enduring cultural icons?",
+        points: [
+          "<strong>Vision & Meaning:</strong> A compelling purpose beyond short-term revenue.",
+          "<strong>Authenticity & Coherence:</strong> Every touchpoint feels like one unmistakable voice.",
+          "<strong>Differentiation & Flexibility:</strong> Standing apart while adapting across mobile, retail, and AI surfaces.",
+          "<strong>Value & Commitment:</strong> Measurable ROI backed by disciplined long-term asset management."
+        ]
+      },
+      {
+        cat: "elements", badge: "Identity Elements",
+        title: "Brandmark Taxonomy",
+        summary: "Choosing a mark architecture is strategic—not merely decorative.",
+        points: [
+          "<strong>Wordmarks:</strong> Stylized name (Google, Zomato). Best for building direct name recall.",
+          "<strong>Letterforms:</strong> Single-letter anchor (Netflix 'N'). Essential for app icons & favicons.",
+          "<strong>Pictorial & Abstract Marks:</strong> Recognizable symbols (Apple, Nike Swoosh).",
+          "<strong>Emblems:</strong> Name enclosed inside a badge/crest (Starbucks, Harley-Davidson)."
+        ]
+      },
+      {
+        cat: "elements", badge: "Identity Elements",
+        title: "Taglines & Brand Characters",
+        summary: "Verbal hooks and visual mascots that bypass rational skepticism.",
+        points: [
+          "<strong>Taglines:</strong> Short phrases capturing essence (Nike 'Just Do It', Amul 'The Taste of India').",
+          "<strong>Characters / Mascots:</strong> Humanized ambassadors (Amul Girl, Duolingo Owl) built for social agility."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "6th Ed. Dynamics",
+        title: "AI, Automation & Big Data Personalization",
+        summary: "New in the 6th Edition: How algorithms reshape brand identity.",
+        points: [
+          "<strong>Generative AI:</strong> Speeds up concept exploration—but generic prompts erode differentiation.",
+          "<strong>Big Data Touchpoints:</strong> Turning usage insights into shareable cultural rituals (e.g., Spotify Wrapped)."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "6th Ed. Dynamics",
+        title: "Sustainability, Social Justice & Rebrands",
+        summary: "Why modern brands audit purpose alongside visual modernization.",
+        points: [
+          "<strong>Zero Greenwashing:</strong> Eco-claims must be visible in packaging and supply-chain transparency.",
+          "<strong>Before & After Rebrands:</strong> Driven by EV shifts, digital legibility, or shedding legacy perceptions (e.g., Kia, Burger King)."
+        ]
+      }
+    ];
+
+    const PHASES_DATA = [
+      {
+        id: "p1", num: "Phase 1", title: "Conducting Research",
+        tagline: "Clarify vision, values, and category reality before designing a single pixel.",
+        overview: "Phase 1 uncovers how leadership, customers, and competitors perceive the brand—exposing the strategic gap between perception and aspiration.",
+        keyConcepts: [
+          { name: "Defining the Problem", desc: "Align leadership on why the brand initiative matters now." },
+          { name: "Market & Usability Research", desc: "Customer interviews and UX testing to uncover real friction." },
+          { name: "Marketing, Competitive & Verbal Audits", desc: "Audit competitor positioning, messaging habits, and visual clichés." },
+          { name: "Findings Report", desc: "Synthesize raw observations into sharp strategic opportunities." }
+        ],
+        checklist: [
+          "Interviewed key stakeholders to align on business goals",
+          "Completed Competitive Audit of top 3–5 category rivals",
+          "Conducted Verbal Audit of existing taglines & UX copy",
+          "Synthesized insights into a Findings Report"
+        ]
+      },
+      {
+        id: "p2", num: "Phase 2", title: "Clarifying Strategy",
+        tagline: "Methodical examination meets strategic imagination.",
+        overview: "Strategy is choosing what NOT to say. Here you narrow focus, define positioning, write the Brand Brief, and validate naming.",
+        keyConcepts: [
+          { name: "Narrowing the Focus", desc: "Distill complex offerings into one unmistakable core promise." },
+          { name: "Positioning", desc: "Claim distinct mental real estate relative to alternatives." },
+          { name: "The Brand Brief", desc: "The guiding contract covering audience, point of difference, and voice." },
+          { name: "Naming / Renaming", desc: "Distinctive, memorable, future-proof, and trademark-clear." }
+        ],
+        checklist: [
+          "Defined a single-minded Positioning Statement",
+          "Secured sign-off on the Brand Brief",
+          "Validated target personas & value proposition",
+          "Verified domain & trademark availability (if naming)"
+        ]
+      },
+      {
+        id: "p3", num: "Phase 3", title: "Designing Identity",
+        tagline: "Translating intelligence into a cohesive visual & sensory system.",
+        overview: "Design an interconnected system—color, typography, iconography, motion, and sound—tested on real-world trial applications.",
+        keyConcepts: [
+          { name: "Identity System & Look-and-Feel", desc: "Works seamlessly from 16px app icons to outdoor hoardings." },
+          { name: "Color & Typography", desc: "Signal category differentiation and unmistakable voice." },
+          { name: "Sound & Sensory Cues", desc: "Sonic mnemonics, tactile textures, and motion choreography." },
+          { name: "Trial Applications", desc: "Mock up the identity on packaging, apps, and ads before approval." }
+        ],
+        checklist: [
+          "Built scalable lockups (primary, secondary, favicon)",
+          "Defined accessible primary & secondary color palettes",
+          "Selected display & body typography hierarchy",
+          "Stress-tested across 3+ Trial Applications"
+        ]
+      },
+      {
+        id: "p4", num: "Phase 4", title: "Creating Touchpoints",
+        tagline: "Every customer contact builds—or erodes—trust.",
+        overview: "Bring the approved identity alive across websites, apps, packaging, ads, retail environments, and unboxing experiences.",
+        keyConcepts: [
+          { name: "Content Strategy & Website", desc: "Align UX, storytelling, and editorial tone." },
+          { name: "Product Design & Packaging", desc: "Packaging acts as the silent salesperson and unboxing hero." },
+          { name: "Advertising & Campaigns", desc: "High-impact creative that reinforces brand recognition." },
+          { name: "Environments & Ephemera", desc: "Retail signage, uniforms, stickers, and delivery bags." }
+        ],
+        checklist: [
+          "Mapped full customer journey to prioritize key touchpoints",
+          "Updated digital flagship (Website, App UI, Social)",
+          "Aligned packaging & campaign templates",
+          "Audited physical/environmental touchpoints"
+        ]
+      },
+      {
+        id: "p5", num: "Phase 5", title: "Managing Assets",
+        tagline: "Launching is Day 1. Governance protects brand equity.",
+        overview: "Launch internally first, empower brand champions, and publish living guidelines inside an accessible Online Brand Center.",
+        keyConcepts: [
+          { name: "Launching & Brand Champions", desc: "Employees are your most credible ambassadors—launch to them first." },
+          { name: "Changing Brand Assets", desc: "Plan phased rollouts to avoid costly waste." },
+          { name: "Online Brand Centers", desc: "Cloud hubs for logos, fonts, templates, and dos/don'ts." },
+          { name: "Guidelines & Brand Books", desc: "Inspire creativity within clear guardrails." }
+        ],
+        checklist: [
+          "Executed internal employee launch before external PR",
+          "Published living Brand Guidelines & Voice Manual",
+          "Launched Online Brand Center / Asset Kit",
+          "Set ongoing brand governance & equity KPI reviews"
+        ]
+      }
+    ];
+
+    const STATIC_CAMPAIGNS = [
+      {
+        id: "amul", brand: "Amul", campaign: "Utterly Butterly Delicious & Topical Marketing",
+        region: "India", category: "Cultural Moment Marketing",
+        wheelerPhase: "Phase 3 (Character Mascot) & Phase 4 (Agile Touchpoints)",
+        hook: "How a dairy co-op turned daily news headlines into a 55+ year brand moat.",
+        challenge: "Make staple butter culturally beloved across diverse Indian regions on a modest ad budget.",
+        insight: "Indians bond passionately over cricket, cinema, and news. Speaking like a witty neighbor earns daily attention.",
+        execution: "The polka-dotted Amul Girl mascot delivers pun-filled topical billboards and social posts within hours of trending events.",
+        takeaway: "Consistent brand characters + real-time topical agility create unbeatable mental availability.",
+        impact: "World's longest-running outdoor campaign; cemented Amul as 'The Taste of India'."
+      },
+      {
+        id: "cred", brand: "CRED", campaign: "Indiranagar ka Gunda & Retro-Absurdist Ads",
+        region: "India", category: "Tone of Voice & Differentiation",
+        wheelerPhase: "Phase 2 (Positioning) & Phase 4 (Advertising)",
+        hook: "Turning calm Indian icons into comedic chaos to dominate IPL attention.",
+        challenge: "Break through noisy IPL broadcasts while driving affluent adoption of a credit-card payment app.",
+        insight: "Fintech ads usually sound serious and transactional. Casting Rahul Dravid as an enraged 'Indiranagar ka Gunda' shatters category expectations.",
+        execution: "Paired luxury dark-mode UI (Phase 3) with self-aware retro humor built for meme sharing.",
+        takeaway: "When a category zigs into corporate jargon, zagging into sharp humor builds instant cultural currency.",
+        impact: "50M+ organic views, massive meme velocity, and sharp surges in brand search."
+      },
+      {
+        id: "zomato", brand: "Zomato", campaign: "Hyper-Local Verbal Identity & Push Notifications",
+        region: "India", category: "Verbal Identity & Touchpoints",
+        wheelerPhase: "Phase 1 (Verbal Audit) & Phase 4 (Digital Touchpoints)",
+        hook: "Proving lock-screen micro-copy can outperform expensive TV spots.",
+        challenge: "Retain daily mindshare in food delivery where switching costs are near zero.",
+        insight: "Food is impulsive, emotional, and deeply tied to local weather, cricket, and late-night cravings.",
+        execution: "Crafted a witty, conversational verbal identity across push notifications, billboard banter, and minimalist red packaging.",
+        takeaway: "Every push notification and delivery bag is a strategic brand touchpoint.",
+        impact: "Industry-leading organic social engagement and recall among urban Gen Z & Millennials."
+      },
+      {
+        id: "fevicol", brand: "Fevicol", campaign: "Mazboot Jod — Visual Metaphor Mastery",
+        region: "India", category: "Single-Minded Positioning",
+        wheelerPhase: "Phase 2 (Narrowing Focus) & Phase 3 (Visual Storytelling)",
+        hook: "Turning industrial glue into India's most loved storytelling brand.",
+        challenge: "Make a low-involvement commodity bought by carpenters unforgettable to households.",
+        insight: "Skip chemical specs—dramatize one universal promise: an unbreakable bond.",
+        execution: "Decades of silent visual metaphors—overloaded buses, unbroken family ties, and witty topical prints.",
+        takeaway: "Phase 2 discipline: own ONE clear mental attribute so completely competitors look like imitations.",
+        impact: "~70% market share in white adhesives and iconic status in Indian advertising."
+      },
+      {
+        id: "paperboat", brand: "Paper Boat", campaign: "Drinks & Memories — Packaging as Storytelling",
+        region: "India", category: "Packaging & Sensory Identity",
+        wheelerPhase: "Phase 3 (Identity System) & Phase 4 (Packaging)",
+        hook: "Competing with global soda giants by bottling childhood nostalgia.",
+        challenge: "Win shelf space for traditional drinks (Aamras, Jaljeera) against multinational cola brands.",
+        insight: "Colas sell youth cool; Paper Boat claimed innocent Indian childhood memories.",
+        execution: "Replaced rigid plastic bottles with tactile pear-shaped pouches, watercolor art, and poetic back-of-pack stories.",
+        takeaway: "Distinctive structural packaging + emotional positioning creates an instant category of one.",
+        impact: "Built cult brand affinity nationwide without relying on celebrity endorsements."
+      },
+      {
+        id: "nike", brand: "Nike", campaign: "Just Do It & Dream Crazy",
+        region: "Global", category: "Brand Purpose & Archetype",
+        wheelerPhase: "Phase 2 (Brand Ideals) & Phase 4 (Campaigns)",
+        hook: "Selling human potential rather than rubber and foam.",
+        challenge: "Keep a legacy sportswear leader culturally vital for younger generations.",
+        insight: "Every person with a body is an athlete capable of overcoming self-doubt.",
+        execution: "Bold monochrome typography, raw storytelling, and fearless stances anchored in its Hero archetype.",
+        takeaway: "6th Ed. Social Justice dynamic works only when rooted in decades of consistent brand DNA.",
+        impact: "Generated billions in brand value growth and enduring cultural loyalty."
+      },
+      {
+        id: "apple", brand: "Apple", campaign: "Think Different & Cohesive Ecosystem Identity",
+        region: "Global", category: "Identity Coherence",
+        wheelerPhase: "Phase 2 (Positioning) & Phase 3 (Identity System)",
+        hook: "The benchmark of Wheeler’s Coherence ideal across hardware, retail, and UX.",
+        challenge: "Turn cold personal computing into an intuitive, human-centered lifestyle brand.",
+        insight: "Technology should feel empowering, minimal, and effortless—never spec-obsessed.",
+        execution: "Unified minimalist unboxing, iconic silhouettes, Genius Bar stores, and privacy-first messaging.",
+        takeaway: "When strategy and design align across every touchpoint, marketing becomes self-reinforcing.",
+        impact: "Built one of the most valuable and loyal brand ecosystems globally."
+      },
+      {
+        id: "spotify", brand: "Spotify", campaign: "Spotify Wrapped — Data as a Cultural Touchpoint",
+        region: "Global", category: "Big Data & Co-Creation",
+        wheelerPhase: "6th Ed. Dynamics (Big Data) & Phase 4 (Touchpoints)",
+        hook: "Transforming passive listening logs into a global year-end social ritual.",
+        challenge: "Differentiate when rival streaming apps offer identical song catalogs and pricing.",
+        insight: "Listeners love seeing—and sharing—what their music taste says about their identity.",
+        execution: "Turned personal analytics into vibrant, swipeable story cards with witty personality labels.",
+        takeaway: "Turn Big Data into delightful identity artifacts users want to share organically.",
+        impact: "Hundreds of millions of organic shares each December driving massive free acquisition."
+      },
+      {
+        id: "liquiddeath", brand: "Liquid Death", campaign: "Murder Your Thirst — Category Disruption",
+        region: "Global", category: "Naming & Packaging Disruption",
+        wheelerPhase: "Phase 2 (Naming) & Phase 3 (Look & Feel)",
+        hook: "Scaling plain canned water to a $1B+ valuation with heavy-metal branding.",
+        challenge: "Stand out in the most commoditized beverage category—bottled water.",
+        insight: "Healthy products look like yoga retreats while unhealthy drinks get all the rebellious fun.",
+        execution: "Tallboy aluminum cans, skull art, dark comedy, and 'Death to Plastic' sustainability positioning.",
+        takeaway: "Radical positioning in Phase 2 & 3 can turn a commodity into a lifestyle tribe.",
+        impact: "Reached a $1.4B valuation as one of the fastest-growing beverage disruptors."
+      },
+      {
+        id: "kia", brand: "Kia", campaign: "Movement That Inspires — Strategic Rebrand",
+        region: "Rebrand", category: "Before & After Transformation",
+        wheelerPhase: "Phase 3 (Brandmark Redesign) & Phase 5 (Asset Rollout)",
+        hook: "Shedding a 'budget economy car' perception for an electric mobility future.",
+        challenge: "Outdated oval logo held back perception even after launching award-winning EVs.",
+        insight: "Product innovation stalls if the brandmark still signals the old story.",
+        execution: "Replaced the enclosed oval with a sleek continuous-line wordmark launched via record drone show.",
+        takeaway: "Rebrands succeed when paired with real product transformation and bold Phase 5 launches.",
+        impact: "Significant lift in brand perception, EV consideration, and global search interest."
+      }
+    ];
+
+    const AUDIT_CRITERIA = [
+      { id: "clarity", label: "Clarity (Value proposition understood in 5 seconds?)" },
+      { id: "diff", label: "Differentiation (Sharply distinct from competitors?)" },
+      { id: "visual", label: "Visual Cohesion (Logo, color & type unified everywhere?)" },
+      { id: "touch", label: "Touchpoint Craft (Website, packaging & social delight users?)" },
+      { id: "gov", label: "Governance (Voice & assets stay consistent over time?)" }
+    ];
+
+    const QUIZ_DATA = [
+      {
+        q: "According to Alina Wheeler, what distinguishes a 'Brand' from 'Brand Identity'?",
+        options: [
+          "Brand is the logo; Brand Identity is the tagline.",
+          "Brand is the audience's gut perception; Brand Identity is the tangible, sensory system you design.",
+          "Brand only applies to B2C; Brand Identity is for B2B.",
+          "They are interchangeable terms."
+        ],
+        ans: 1,
+        exp: "A brand lives in customers' minds. Brand identity is the tangible visual, verbal, and sensory expression you design."
+      },
+      {
+        q: "Which phase of Designing Brand Identity (6th Ed.) produces the 'Findings Report'?",
+        options: ["Phase 1: Conducting Research", "Phase 2: Clarifying Strategy", "Phase 3: Designing Identity", "Phase 5: Managing Assets"],
+        ans: 0,
+        exp: "Phase 1 audits synthesize into a Findings Report before strategy begins."
+      },
+      {
+        q: "A founder asks a designer for 10 logo drafts on Day 1 without defining positioning or target audience. Which phases were skipped?",
+        options: ["Phase 4 & 5", "Phase 1 & Phase 2 (Research & Strategy)", "Phase 3 Trial Applications", "Only Phase 5"],
+        ans: 1,
+        exp: "Skipping Phase 1 & Phase 2 turns identity design into arbitrary decoration rather than strategic problem-solving."
+      },
+      {
+        q: "What strategic insight powers Liquid Death ('Murder Your Thirst')?",
+        options: [
+          "Underpricing bottled water by 50%",
+          "Borrowing heavy-metal visual codes to disrupt a serene commodity category",
+          "Using blue mountain imagery to build trust",
+          "Avoiding social media"
+        ],
+        ans: 1,
+        exp: "Breaking category visual clichés in Phase 2 & 3 turned plain water into a cult lifestyle brand."
+      },
+      {
+        q: "Why are 'Trial Applications' vital in Phase 3 before presenting an identity to executives?",
+        options: [
+          "To test how the mark performs on real touchpoints like 16px favicons, packaging, and signage",
+          "To delay launch timelines",
+          "To replace brand guidelines",
+          "To skip Phase 1 research"
+        ],
+        ans: 0,
+        exp: "Logos that look fine on blank slides often fail in real-world scale, contrast, or packaging contexts."
+      },
+      {
+        q: "Who should a brand launch a new identity to FIRST in Phase 5?",
+        options: ["Press & journalists", "Competitors", "Internal employees & teams (Brand Champions)", "Paid ad networks"],
+        ans: 2,
+        exp: "Launching internally first builds informed, passionate Brand Champions across the company."
+      },
+      {
+        q: "Which 6th Edition dynamic does Spotify Wrapped exemplify?",
+        options: ["Private labeling", "Big Data transformed into shareable brand touchpoints", "Vehicle signage", "Crisis communications"],
+        ans: 1,
+        exp: "Spotify turns user listening analytics into personalized visual stories built for organic sharing."
+      },
+      {
+        q: "What type of brandmark encloses the brand name inside a crest or shape (e.g., Starbucks)?",
+        options: ["Wordmark", "Letterform", "Emblem", "Sonic mark"],
+        ans: 2,
+        exp: "An emblem integrates the name inextricably inside a shape or crest."
+      },
+      {
+        q: "Why is Fevicol's 'Mazboot Jod' a textbook Phase 2 victory?",
+        options: [
+          "It lists 12 chemical specs in every commercial",
+          "It narrows focus to ONE unforgettable promise dramatized visually",
+          "It redesigns its logo every year",
+          "It relies purely on discount coupons"
+        ],
+        ans: 1,
+        exp: "Phase 2 is about narrowing focus to own one powerful mental association completely."
+      },
+      {
+        q: "Why did Kia replace its old red oval mark with a sleek continuous-line wordmark?",
+        options: [
+          "To match its product shift toward modern EVs and shed legacy 'budget car' perception",
+          "Because red ink was discontinued",
+          "To avoid creating digital assets",
+          "To hide its brand name"
+        ],
+        ans: 0,
+        exp: "6th Ed. Before & After rebrands align visual perception with real business and product transformation."
+      }
+    ];
+
+    const DEFAULT_STATE = {
+      checkedItems: {},
+      readCampaigns: [],
+      pinnedCampaigns: [],
+      quizBest: 0,
+      activePhase: 0,
+      campaignFilter: "all",
+      basicsFilter: "all",
+      liveFilter: "all",
+      auditScores: { clarity: 3, diff: 3, visual: 3, touch: 3, gov: 3 },
+      liveSignals: [],
+      lastSync: null
+    };
+
+    let state = loadState();
+    let quoteIdx = 0;
+    let quizIdx = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+    let engineMode = "connecting";
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem("marketingAddaApp");
+        return saved ? { ...DEFAULT_STATE, ...JSON.parse(saved) } : { ...DEFAULT_STATE };
+      } catch (e) {
+        return { ...DEFAULT_STATE };
+      }
+    }
+
+    function saveState() {
+      try { localStorage.setItem("marketingAddaApp", JSON.stringify(state)); } catch (e) {}
+      updateGlobalStats();
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatRelativeTime(iso) {
+      if (!iso) return "just now";
+      const diffMins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+      if (diffMins < 1) return "just now";
+      if (diffMins < 60) return `${diffMins}m ago`;
+      const hrs = Math.round(diffMins / 60);
+      return hrs < 24 ? `${hrs}h ago` : `${Math.round(hrs / 24)}d ago`;
+    }
+
+    async function syncLiveTrends(force = false) {
+      const btn = document.getElementById("sync-btn");
+      const meta = document.getElementById("live-sync-meta");
+      if (btn) btn.textContent = "Syncing...";
+      if (meta) meta.textContent = "Pulling live startup & brand campaign signals...";
+
+      try {
+        const res = await fetch(`/api/live-trends${force ? "?force=1" : ""}`, {
+          signal: AbortSignal.timeout(12000)
+        });
+        if (!res.ok) throw new Error("Backend unavailable");
+        const data = await res.json();
+
+        if (data.ok && Array.isArray(data.signals) && data.signals.length > 0) {
+          engineMode = `Live Engine (${data.sourcesActive} active feeds)`;
+          state.liveSignals = data.signals;
+          state.lastSync = data.updatedAt || new Date().toISOString();
+          saveState();
+          if (meta) meta.textContent = `Connected (${data.sourcesActive} active sources) · Updated ${formatRelativeTime(state.lastSync)}`;
+        } else {
+          throw new Error("Empty payload");
+        }
+      } catch (err) {
+        try {
+          const hnRes = await fetch("https://hn.algolia.com/api/v1/search_by_date?query=startup%20OR%20branding%20OR%20marketing&tags=story&hitsPerPage=10");
+          const hnJson = await hnRes.json();
+          const signals = (hnJson.hits || []).filter(h => h.title).map(h => ({
+            id: `hn_${h.objectID}`,
+            title: h.title,
+            source: "Hacker News Live",
+            pubDate: h.created_at || new Date().toISOString(),
+            link: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
+            snippet: `Trending tech & startup signal (${h.points || 0} points · ${h.num_comments || 0} comments).`,
+            signalType: "Startup",
+            wheelerPhase: "Phase 2: Clarifying Strategy",
+            phaseReason: "Tests positioning and market differentiation.",
+            dynamic6th: "Startup Positioning & Scale"
+          }));
+
+          engineMode = "Browser Fallback Mode";
+          state.liveSignals = signals;
+          state.lastSync = new Date().toISOString();
+          saveState();
+          if (meta) meta.textContent = `Browser fallback active (${signals.length} live signals).`;
+        } catch (fallbackErr) {
+          if (meta) meta.textContent = "Offline — showing cached signals.";
+        }
+      }
+
+      if (btn) btn.textContent = "↻ Sync Live Now";
+      renderLiveTrends();
+      renderHomeLivePreview();
+      updateGlobalStats();
+    }
+
+    async function loadServerVault() {
+      try {
+        const res = await fetch("/api/vault");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.ok && Array.isArray(data.items) && data.items.length > 0) {
+          const existingIds = new Set(state.pinnedCampaigns.map(x => x.id));
+          data.items.forEach(item => {
+            if (!existingIds.has(item.id)) state.pinnedCampaigns.push(item);
+          });
+          saveState();
+          renderCampaigns();
+        }
+      } catch (e) {}
+    }
+
+    function setLiveFilter(filter, btn) {
+      state.liveFilter = filter;
+      document.querySelectorAll("#view-live .filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderLiveTrends();
+    }
+
+    function renderHomeLivePreview() {
+      const container = document.getElementById("home-live-preview");
+      const items = (state.liveSignals || []).slice(0, 3);
+      if (!items.length) {
+        container.innerHTML = `<div class="card"><p style="font-size:13px;color:var(--text-secondary);">Syncing live startup & brand campaign feeds...</p></div>`;
+        return;
+      }
+      container.innerHTML = items.map(it => `
+        <div class="card trend-card">
+          <div>
+            <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+              <span class="pill pill-purple">${escapeHtml(it.signalType)}</span>
+              <span style="font-size:11px;color:var(--text-secondary);">${escapeHtml(it.source)} · ${formatRelativeTime(it.pubDate)}</span>
+            </div>
+            <h4 style="font-size:16px;line-height:1.35;margin-bottom:8px;">${escapeHtml(it.title)}</h4>
+            <div class="wheeler-tag-box">
+              <strong>${escapeHtml(it.wheelerPhase)}</strong><br/>
+              <span style="color:var(--text-secondary);">${escapeHtml(it.dynamic6th)}</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="btn btn-secondary btn-sm" onclick="openPinModal('${escapeHtml(it.id)}')">+ Pin to Vault</button>
+            <a class="btn btn-outline btn-sm" href="${escapeHtml(it.link)}" target="_blank" rel="noopener noreferrer">Read ↗</a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderLiveTrends() {
+      const container = document.getElementById("live-trends-grid");
+      const q = (document.getElementById("live-search")?.value || "").toLowerCase();
+      const signals = state.liveSignals || [];
+
+      const filtered = signals.filter(s => {
+        const matchCat = state.liveFilter === "all" || s.signalType === state.liveFilter;
+        const matchQ = !q ||
+          s.title.toLowerCase().includes(q) ||
+          s.snippet.toLowerCase().includes(q) ||
+          s.wheelerPhase.toLowerCase().includes(q) ||
+          s.source.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = `<div class="card"><p>No matching live signals yet. Click <strong>Sync Live Now</strong> or switch filters.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(it => {
+        const alreadyPinned = state.pinnedCampaigns.some(p => p.title === it.title || p.id === "pin_" + it.id);
+        return `
+          <div class="card trend-card">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+                <span class="pill ${it.signalType === 'Campaign' ? 'pill-orange' : it.signalType === 'Rebrand' ? 'pill-teal' : 'pill-purple'}">${escapeHtml(it.signalType)} · ${escapeHtml(it.dynamic6th)}</span>
+                <span style="font-size:12px;color:var(--text-secondary);">${escapeHtml(it.source)} · ${formatRelativeTime(it.pubDate)}</span>
+              </div>
+              <h3 style="font-size:18px;line-height:1.35;margin-bottom:8px;">${escapeHtml(it.title)}</h3>
+              <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:12px;">${escapeHtml(it.snippet)}</p>
+              <div class="wheeler-tag-box">
+                <strong>Wheeler Mapping: ${escapeHtml(it.wheelerPhase)}</strong>
+                <div style="color:var(--text-secondary);margin-top:2px;">${escapeHtml(it.phaseReason)}</div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:8px;border-top:1px solid var(--border);flex-wrap:wrap;">
+              <a class="btn btn-outline btn-sm" href="${escapeHtml(it.link)}" target="_blank" rel="noopener noreferrer">Open Original Source ↗</a>
+              <button class="btn ${alreadyPinned ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="openPinModal('${escapeHtml(it.id)}')">
+                ${alreadyPinned ? '✓ Adapted in Vault' : '+ Adapt to Campaign Vault'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openPinModal(signalId) {
+      const it = (state.liveSignals || []).find(x => x.id === signalId);
+      if (!it) return;
+
+      document.getElementById("modal-body").innerHTML = `
+        <div class="pill pill-purple" style="margin-bottom:10px;">Adapt Live Signal → Permanent Case Study</div>
+        <h2 style="font-family:var(--font-serif);font-size:24px;margin-bottom:8px;">${escapeHtml(it.title)}</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Auto-mapped to <strong>${escapeHtml(it.wheelerPhase)}</strong> · ${escapeHtml(it.dynamic6th)}</p>
+        <div class="form-group">
+          <label>Brand / Startup Name</label>
+          <input type="text" class="form-control" id="pin-brand" value="${escapeHtml(it.title.split(':')[0].split('—')[0].slice(0, 42))}" />
+        </div>
+        <div class="form-group">
+          <label>Your Strategist Takeaway</label>
+          <textarea class="form-control" id="pin-takeaway">${escapeHtml(it.phaseReason)}</textarea>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="savePinnedCampaign('${escapeHtml(it.id)}')">Save to Campaign Vault</button>
+        </div>
+      `;
+      document.getElementById("app-modal").classList.add("open");
+    }
+
+    async function savePinnedCampaign(signalId) {
+      const it = (state.liveSignals || []).find(x => x.id === signalId);
+      if (!it) return;
+
+      const brandName = document.getElementById("pin-brand").value.trim() || "Live Trend";
+      const takeaway = document.getElementById("pin-takeaway").value.trim() || it.phaseReason;
+
+      const newCase = {
+        id: "pin_" + it.id,
+        title: it.title,
+        brand: brandName,
+        campaign: it.title,
+        region: "Live-Pinned",
+        category: it.dynamic6th,
+        wheelerPhase: it.wheelerPhase,
+        hook: it.snippet,
+        challenge: `Captured live from ${it.source} (${formatRelativeTime(it.pubDate)}).`,
+        insight: it.phaseReason,
+        execution: it.snippet,
+        takeaway,
+        impact: `Source: ${it.link}`
+      };
+
+      state.pinnedCampaigns = state.pinnedCampaigns.filter(p => p.id !== newCase.id);
+      state.pinnedCampaigns.unshift(newCase);
+      saveState();
+
+      try {
+        await fetch("/api/vault", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newCase)
+        });
+      } catch (e) {}
+
+      closeModal();
+      renderLiveTrends();
+      renderCampaigns();
+      alert("Saved to Campaign Vault!");
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".section-view").forEach(el => el.classList.remove("active"));
+      document.getElementById("view-" + tabId).classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tabId));
+      document.getElementById("sidebar").classList.remove("open");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function toggleSidebar() { document.getElementById("sidebar").classList.toggle("open"); }
+
+    function cycleQuote() {
+      quoteIdx = (quoteIdx + 1) % QUOTES.length;
+      document.getElementById("daily-quote").textContent = QUOTES[quoteIdx].q;
+      document.querySelector(".hero-author").textContent = "— " + QUOTES[quoteIdx].a;
+    }
+
+    function updateGlobalStats() {
+      const totalChecklist = PHASES_DATA.reduce((acc, p) => acc + p.checklist.length, 0);
+      const doneCount = Object.values(state.checkedItems).filter(Boolean).length;
+      const pct = Math.round((doneCount / totalChecklist) * 100);
+
+      document.getElementById("home-checklist-pct").textContent = pct + "%";
+      document.getElementById("home-progress-bar").style.width = pct + "%";
+      document.getElementById("badge-process").textContent = pct + "%";
+
+      const allVaultCount = STATIC_CAMPAIGNS.length + (state.pinnedCampaigns?.length || 0);
+      document.getElementById("badge-vault").textContent = allVaultCount;
+      document.getElementById("home-cases-read").textContent = `${state.readCampaigns.length} / ${allVaultCount}`;
+
+      const liveCount = state.liveSignals?.length || 0;
+      document.getElementById("badge-live").textContent = liveCount;
+      document.getElementById("home-live-count").textContent = `${liveCount} Signals`;
+      if (state.lastSync) {
+        document.getElementById("home-live-status").textContent = `${engineMode} · ${formatRelativeTime(state.lastSync)}`;
+      }
+
+      const points = doneCount + state.readCampaigns.length + (state.pinnedCampaigns?.length || 0) * 2 + state.quizBest;
+      let rank = "Curious Apprentice";
+      if (points >= 28) rank = "Chief Brand Officer";
+      else if (points >= 18) rank = "Lead Brand Architect";
+      else if (points >= 8) rank = "Rising Strategist";
+      document.getElementById("strategist-rank").textContent = "Rank: " + rank;
+    }
+
+    function filterBasics(cat, btn) {
+      state.basicsFilter = cat;
+      document.querySelectorAll("#view-basics .filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderBasics();
+    }
+
+    function renderBasics() {
+      const items = state.basicsFilter === "all" ? BASICS_DATA : BASICS_DATA.filter(b => b.cat === state.basicsFilter);
+      document.getElementById("basics-grid").innerHTML = items.map(item => `
+        <div class="card">
+          <div class="pill pill-orange" style="margin-bottom:10px;">${item.badge}</div>
+          <h3 style="font-size:19px;margin-bottom:6px;">${item.title}</h3>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;">${item.summary}</p>
+          <ul style="padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:8px;">
+            ${item.points.map(pt => `<li>${pt}</li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
+    }
+
+    function renderPhases() {
+      document.getElementById("phase-tabs").innerHTML = PHASES_DATA.map((p, idx) => `
+        <button class="phase-tab ${state.activePhase === idx ? 'active' : ''}" onclick="selectPhase(${idx})">
+          <div class="phase-num">${p.num}</div>
+          <div class="phase-name">${p.title}</div>
+        </button>
+      `).join("");
+
+      const p = PHASES_DATA[state.activePhase];
+      document.getElementById("phase-detail-container").innerHTML = `
+        <div class="card">
+          <div class="eyebrow">${p.num} Overview</div>
+          <h3 style="font-family:var(--font-serif);font-size:26px;margin-bottom:6px;">${p.title}</h3>
+          <p style="font-weight:600;color:var(--accent);margin-bottom:12px;">${p.tagline}</p>
+          <p style="color:var(--text-secondary);margin-bottom:22px;">${p.overview}</p>
+          <div class="grid-2">
+            <div>
+              <h4 style="margin-bottom:12px;">Core Book Concepts</h4>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                ${p.keyConcepts.map(kc => `
+                  <div style="padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-paper);border-radius:0 10px 10px 0;">
+                    <strong style="display:block;font-size:14px;">${kc.name}</strong>
+                    <span style="font-size:13px;color:var(--text-secondary);">${kc.desc}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+            <div>
+              <h4 style="margin-bottom:12px;">Strategist Deliverable Checklist</h4>
+              ${p.checklist.map((item, cIdx) => {
+                const key = `${p.id}_${cIdx}`;
+                const checked = !!state.checkedItems[key];
+                return `
+                  <label class="checklist-item ${checked ? 'done' : ''}">
+                    <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleCheck('${key}')" />
+                    <span style="font-size:14px;">${item}</span>
+                  </label>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectPhase(idx) { state.activePhase = idx; saveState(); renderPhases(); }
+    function toggleCheck(key) { state.checkedItems[key] = !state.checkedItems[key]; saveState(); renderPhases(); }
+
+    function setCampaignFilter(filter, btn) {
+      state.campaignFilter = filter;
+      document.querySelectorAll("#view-campaigns .filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderCampaigns();
+    }
+
+    function renderCampaigns() {
+      const allCampaigns = [...(state.pinnedCampaigns || []), ...STATIC_CAMPAIGNS];
+      const q = (document.getElementById("campaign-search").value || "").toLowerCase();
+      const filtered = allCampaigns.filter(c => {
+        const matchesCat = state.campaignFilter === "all" || c.region === state.campaignFilter;
+        const matchesText = !q ||
+          c.brand.toLowerCase().includes(q) ||
+          c.campaign.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q) ||
+          c.wheelerPhase.toLowerCase().includes(q) ||
+          c.hook.toLowerCase().includes(q);
+        return matchesCat && matchesText;
+      });
+
+      const grid = document.getElementById("campaigns-grid");
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="card"><p>No matching campaigns found. Pin a live trend from Live Pulse or change filters!</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(c => {
+        const isRead = state.readCampaigns.includes(c.id);
+        const pillClass = c.region === 'India' ? 'pill-orange' : c.region === 'Rebrand' ? 'pill-teal' : c.region === 'Live-Pinned' ? 'pill-purple' : 'pill-gray';
+        return `
+          <div class="card clickable" onclick="openCampaignModal('${escapeHtml(c.id)}')">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;">
+              <span class="pill ${pillClass}">${escapeHtml(c.region)} · ${escapeHtml(c.category)}</span>
+              ${isRead ? '<span style="font-size:12px;color:var(--teal);font-weight:700;">✓ Studied</span>' : ''}
+            </div>
+            <h3 style="font-size:19px;margin-bottom:4px;">${escapeHtml(c.brand)}: ${escapeHtml(c.campaign)}</h3>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">${escapeHtml(c.hook)}</p>
+            <div style="font-size:12px;font-weight:600;color:var(--accent);">Mapped to: ${escapeHtml(c.wheelerPhase)}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openCampaignModal(id) {
+      const allCampaigns = [...(state.pinnedCampaigns || []), ...STATIC_CAMPAIGNS];
+      const c = allCampaigns.find(x => x.id === id);
+      if (!c) return;
+
+      if (!state.readCampaigns.includes(id)) {
+        state.readCampaigns.push(id);
+        saveState();
+        renderCampaigns();
+      }
+
+      document.getElementById("modal-body").innerHTML = `
+        <div class="pill pill-orange" style="margin-bottom:10px;">${escapeHtml(c.region)} · ${escapeHtml(c.category)}</div>
+        <h2 style="font-family:var(--font-serif);font-size:26px;margin-bottom:6px;">${escapeHtml(c.brand)} — ${escapeHtml(c.campaign)}</h2>
+        <p style="font-size:14px;font-weight:600;color:var(--teal);margin-bottom:18px;">Wheeler Link: ${escapeHtml(c.wheelerPhase)}</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;">
+          <div style="padding:14px;background:var(--bg-paper);border-radius:10px;"><strong>🎯 Context / Challenge</strong><p style="margin-top:4px;color:var(--text-secondary);">${escapeHtml(c.challenge)}</p></div>
+          <div style="padding:14px;background:var(--bg-paper);border-radius:10px;"><strong>💡 Strategic Insight</strong><p style="margin-top:4px;color:var(--text-secondary);">${escapeHtml(c.insight)}</p></div>
+          <div style="padding:14px;background:var(--bg-paper);border-radius:10px;"><strong>🎨 Execution</strong><p style="margin-top:4px;color:var(--text-secondary);">${escapeHtml(c.execution)}</p></div>
+          <div style="padding:14px;background:var(--accent-soft);border-radius:10px;"><strong style="color:var(--accent);">📌 Strategist Takeaway</strong><p style="margin-top:4px;">${escapeHtml(c.takeaway)}</p></div>
+          <div style="padding:14px;background:var(--teal-soft);border-radius:10px;"><strong style="color:var(--teal);">📈 Impact / Source</strong><p style="margin-top:4px;word-break:break-word;">${escapeHtml(c.impact)}</p></div>
+        </div>
+      `;
+      document.getElementById("app-modal").classList.add("open");
+    }
+
+    function closeModal() { document.getElementById("app-modal").classList.remove("open"); }
+    function closeModalOnBackdrop(e) { if (e.target.id === "app-modal") closeModal(); }
+
+    function updateBriefPreview() {
+      document.getElementById("prev-name").textContent = document.getElementById("brief-name").value || "—";
+      document.getElementById("prev-audience").textContent = document.getElementById("brief-audience").value || "—";
+      document.getElementById("prev-pod").textContent = document.getElementById("brief-pod").value || "—";
+      document.getElementById("prev-tone").textContent = document.getElementById("brief-tone").value || "—";
+      document.getElementById("prev-tagline").textContent = document.getElementById("brief-tagline").value || "—";
+    }
+
+    function loadSampleBrief() {
+      document.getElementById("brief-name").value = "Tapri Craft — Artisanal Instant Masala Chai";
+      document.getElementById("brief-audience").value = "Urban Gen Z & Millennials working long hours who miss authentic street-corner kadak chai.";
+      document.getElementById("brief-pod").value = "Single-estate Assam tea brewed with real crushed ginger & cardamom, freeze-dried for a 30-second café cup.";
+      document.getElementById("brief-tone").value = "Warm, Witty, Unpretentious, Culturally Rooted";
+      document.getElementById("brief-tagline").value = "Street Soul. Studio Craft.";
+      updateBriefPreview();
+    }
+
+    function clearBrief() {
+      ["brief-name", "brief-audience", "brief-pod", "brief-tone", "brief-tagline"].forEach(id => { document.getElementById(id).value = ""; });
+      updateBriefPreview();
+    }
+
+    function copyBrief() {
+      const text = `STRATEGIC BRAND BRIEF (Marketing Adda)
+Brand: ${document.getElementById("prev-name").textContent}
+Target Audience: ${document.getElementById("prev-audience").textContent}
+Positioning / Point of Difference: ${document.getElementById("prev-pod").textContent}
+Tone & Personality: ${document.getElementById("prev-tone").textContent}
+Tagline Territory: ${document.getElementById("prev-tagline").textContent}`;
+      navigator.clipboard?.writeText(text).then(() => alert("Brand Brief copied to clipboard!"));
+    }
+
+    function renderAuditSliders() {
+      document.getElementById("audit-sliders").innerHTML = AUDIT_CRITERIA.map(c => `
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span>${c.label}</span>
+            <strong id="val-${c.id}">${state.auditScores[c.id]}/5</strong>
+          </div>
+          <input type="range" min="1" max="5" value="${state.auditScores[c.id]}" style="width:100%;accent-color:var(--accent);" oninput="updateAudit('${c.id}', this.value)" />
+        </div>
+      `).join("");
+      updateAuditTotal();
+    }
+
+    function updateAudit(id, val) {
+      state.auditScores[id] = Number(val);
+      document.getElementById("val-" + id).textContent = val + "/5";
+      updateAuditTotal();
+      saveState();
+    }
+
+    function updateAuditTotal() {
+      const total = Object.values(state.auditScores).reduce((a, b) => a + b, 0);
+      document.getElementById("audit-total").textContent = `${total} / 25`;
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById("quiz-container");
+      if (quizIdx >= QUIZ_DATA.length) {
+        if (quizScore > state.quizBest) { state.quizBest = quizScore; saveState(); }
+        container.innerHTML = `
+          <div style="text-align:center;padding:20px 10px;">
+            <div class="eyebrow">Challenge Complete</div>
+            <h3 style="font-family:var(--font-serif);font-size:32px;margin:8px 0;">You scored ${quizScore} / ${QUIZ_DATA.length}</h3>
+            <p style="color:var(--text-secondary);margin-bottom:22px;">${quizScore >= 8 ? "Outstanding! You think like a Lead Brand Strategist." : "Solid run! Explore Live Pulse & the 5-Phase Roadmap and try again."}</p>
+            <button class="btn btn-primary" onclick="resetQuiz()">Retake Challenge</button>
+          </div>
+        `;
+        return;
+      }
+
+      const q = QUIZ_DATA[quizIdx];
+      container.innerHTML = `
+        <div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:13px;color:var(--text-secondary);">
+          <span>Question ${quizIdx + 1} of ${QUIZ_DATA.length}</span>
+          <strong>Current Score: ${quizScore}</strong>
+        </div>
+        <h3 style="font-size:19px;margin-bottom:18px;line-height:1.4;">${q.q}</h3>
+        <div id="quiz-options">
+          ${q.options.map((opt, idx) => `<button class="quiz-option" onclick="answerQuiz(${idx})">${opt}</button>`).join("")}
+        </div>
+        <div id="quiz-feedback" style="margin-top:14px;display:none;"></div>
+      `;
+    }
+
+    function answerQuiz(chosen) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const q = QUIZ_DATA[quizIdx];
+      document.querySelectorAll("#quiz-options .quiz-option").forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.ans) btn.classList.add("correct");
+        else if (idx === chosen) btn.classList.add("wrong");
+      });
+      const isRight = chosen === q.ans;
+      if (isRight) quizScore++;
+      const fb = document.getElementById("quiz-feedback");
+      fb.style.display = "block";
+      fb.innerHTML = `
+        <div style="padding:14px;border-radius:10px;background:${isRight ? 'var(--teal-soft)' : 'var(--accent-soft)'};margin-bottom:14px;font-size:14px;">
+          <strong>${isRight ? '✓ Spot On!' : '✕ Not Quite.'}</strong> ${q.exp}
+        </div>
+        <button class="btn btn-primary" onclick="nextQuestion()">${quizIdx + 1 < QUIZ_DATA.length ? 'Next Question →' : 'See Final Score →'}</button>
+      `;
+    }
+
+    function nextQuestion() { quizIdx++; quizAnswered = false; renderQuiz(); }
+    function resetQuiz() { quizIdx = 0; quizScore = 0; quizAnswered = false; renderQuiz(); }
+
+    renderBasics();
+    renderPhases();
+    renderCampaigns();
+    renderAuditSliders();
+    renderQuiz();
+    renderLiveTrends();
+    renderHomeLivePreview();
+    updateGlobalStats();
+
+    loadServerVault();
+    syncLiveTrends(false);
+    setInterval(() => syncLiveTrends(false), 5 * 60 * 1000);
+  </script>
+</body>
+</html>

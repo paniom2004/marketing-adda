@@ -1,0 +1,21 @@
+{
+  "name": "marketing-adda",
+  "version": "1.0.0",
+  "description": "Brand Strategy Studio & Real-Time Startup/Campaign Radar inspired by Designing Brand Identity (6th Ed.)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "web": "node server.js"
+  },
+  "keywords": [
+    "brand-strategy",
+    "electron",
+    "nodejs",
+    "marketing",
+    "designing-brand-identity"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^45.3.2"
+  }
+}
