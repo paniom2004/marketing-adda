@@ -4,44 +4,44 @@ const fs = require("fs");
 const path = require("path");
 
 const PUBLIC_DIR = path.join(__dirname, "public");
-const CACHE_TTL_MS = 2 * 60 * 1000; // Refresh every 2 minutes for high velocity
+const CACHE_TTL_MS = 2 * 60 * 1000; // Refresh every 2 minutes
 
-// High-signal Indian & Global Marketing, Brand Campaign & Startup Feeds
+// 100% Pure Marketing, Advertising, Social Media & Rebrand Feeds
 const RSS_SOURCES = [
   {
     name: "India Ad & Brand Trade",
     type: "Campaign",
-    url: "https://news.google.com/rss/search?q=(site%3Aexchange4media.com%20OR%20site%3Aafaqs.com%20OR%20site%3Asocialsamosa.com%20OR%20site%3Acampaignindia.in%20OR%20site%3Abrandequity.economictimes.indiatimes.com)%20when%3A2d&hl=en-IN&gl=IN&ceid=IN:en"
+    url: "https://news.google.com/rss/search?q=(site%3Aexchange4media.com%20OR%20site%3Aafaqs.com%20OR%20site%3Asocialsamosa.com%20OR%20site%3Acampaignindia.in%20OR%20site%3Abrandequity.economictimes.indiatimes.com)%20when%3A3d&hl=en-IN&gl=IN&ceid=IN:en"
   },
   {
-    name: "India Campaigns & D2C",
+    name: "India Campaigns & Influencers",
     type: "Campaign",
-    url: "https://news.google.com/rss/search?q=(%22brand%20campaign%22%20OR%20%22ad%20campaign%22%20OR%20%22marketing%20campaign%22%20OR%20%22D2C%20brand%22)%20India%20when%3A3d&hl=en-IN&gl=IN&ceid=IN:en"
+    url: "https://news.google.com/rss/search?q=(%22brand%20campaign%22%20OR%20%22ad%20campaign%22%20OR%20%22marketing%20campaign%22%20OR%20%22influencer%20marketing%22%20OR%20%22brand%20ambassador%22)%20India%20when%3A4d&hl=en-IN&gl=IN&ceid=IN:en"
   },
   {
-    name: "Global Rebrands & Design",
+    name: "Global Rebrands & Packaging",
     type: "Rebrand",
-    url: "https://news.google.com/rss/search?q=(rebrand%20OR%20%22brand%20identity%22%20OR%20%22new%20logo%22%20OR%20%22packaging%20design%22)%20when%3A4d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=(rebrand%20OR%20%22brand%20identity%22%20OR%20%22new%20logo%22%20OR%20%22packaging%20design%22%20OR%20%22viral%20campaign%22)%20when%3A4d&hl=en-US&gl=US&ceid=US:en"
   },
   {
-    name: "Booming Indian Startups",
+    name: "AI, Gen Z & Creator Trends",
     type: "Startup",
-    url: "https://news.google.com/rss/search?q=(startup%20OR%20D2C%20OR%20unicorn%20OR%20%22raises%22)%20India%20when%3A2d&hl=en-IN&gl=IN&ceid=IN:en"
+    url: "https://news.google.com/rss/search?q=(%22AI%20marketing%22%20OR%20%22marketing%20trends%22%20OR%20%22Gen%20Z%22%20OR%20%22creator%20economy%22)%20brand%20when%3A5d&hl=en-US&gl=US&ceid=US:en"
   },
   {
-    name: "Entrackr",
-    type: "Startup",
-    url: "https://entrackr.com/rss"
+    name: "Adweek",
+    type: "Campaign",
+    url: "https://www.adweek.com/feed/"
   },
   {
-    name: "Inc42 Startups",
-    type: "Startup",
-    url: "https://inc42.com/feed/"
+    name: "Social Media Examiner",
+    type: "Campaign",
+    url: "https://www.socialmediaexaminer.com/feed/"
   },
   {
-    name: "YourStory",
-    type: "Startup",
-    url: "https://yourstory.com/feed"
+    name: "Social Beat India",
+    type: "Campaign",
+    url: "https://www.socialbeat.in/feed/"
   }
 ];
 
@@ -71,7 +71,7 @@ function fetchUrl(targetUrl, redirectsLeft = 5) {
       targetUrl,
       {
         headers: {
-          "User-Agent": "MarketingAdda/2.0 (Brand Strategy Studio)",
+          "User-Agent": "MarketingAdda/2.1 (Brand & Marketing Trends Studio)",
           "Accept": "application/rss+xml, application/xml, application/json, text/xml, */*"
         },
         timeout: 10000
@@ -126,8 +126,8 @@ function extractTag(block, tag) {
   return match ? decodeEntities(match[1]) : "";
 }
 
-function isNoisyFinancialPost(title = "") {
-  return /\b(q[1-4]\s*results|net\s*profit|profit\s*tanks|profit\s*jumps|ebitda|share\s*price|sensex|nifty|dividend|quarterly\s*earnings|pat\s*rises|pat\s*falls)\b/i.test(title);
+function isBusinessOrFinanceNoise(title = "") {
+  return /\b(q[1-4]\s*results|net\s*profit|profit\s*tanks|profit\s*jumps|ebitda|share\s*price|sensex|nifty|dividend|quarterly\s*earnings|pat\s*rises|pat\s*falls|ipo|layoffs|raises\s*\$|funding\s*round|stock\s*surge|stock\s*falls)\b/i.test(title);
 }
 
 function parseFeedXml(xml, fallbackSource, defaultType) {
@@ -154,19 +154,18 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
       extractTag(block, "content");
     const sourceTag = extractTag(block, "source") || fallbackSource;
 
-    if (!title || !link || isNoisyFinancialPost(title)) continue;
+    if (!title || !link || isBusinessOrFinanceNoise(title)) continue;
 
     const parsedDate =
       pubDateRaw && !isNaN(Date.parse(pubDateRaw))
         ? new Date(pubDateRaw).toISOString()
         : new Date().toISOString();
 
-    // Avoid repeating the exact same title as the snippet (common in Google News RSS)
     const normalizedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
     const normalizedDesc = description.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
     let cleanSnippet = description;
     if (!cleanSnippet || (normalizedTitle && normalizedDesc.startsWith(normalizedTitle))) {
-      cleanSnippet = `Live industry update from ${sourceTag}. Open the source article to inspect the audience insight, positioning, and creative rollout.`;
+      cleanSnippet = `Live marketing & brand trend from ${sourceTag}. Open the article to examine its consumer insight, messaging, and creative execution.`;
     } else if (cleanSnippet.length > 190) {
       cleanSnippet = cleanSnippet.slice(0, 187) + "...";
     }
@@ -187,38 +186,38 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
 function classifyWithWheeler(item) {
   const text = `${item.title} ${item.snippet} ${item.source}`.toLowerCase();
 
-  let signalType = item.signalType || "Startup";
+  let signalType = item.signalType || "Campaign";
   if (/rebrand|logo|wordmark|redesign|identity|packaging|typography|mascot|visual/.test(text)) {
     signalType = "Rebrand";
-  } else if (/campaign|ad |ads |commercial|film|festive|ipl|influencer|marketing|viral|exchange4media|afaqs|socialsamosa|campaignindia|brandequity|brand ambassador/.test(text)) {
-    signalType = "Campaign";
-  } else if (/startup|funding|raises|d2c|launch|unicorn|ipo|series [a-z]|founder/.test(text)) {
+  } else if (/gen z|creator|ai marketing|trend|d2c|consumer/.test(text)) {
     signalType = "Startup";
+  } else {
+    signalType = "Campaign";
   }
 
-  let wheelerPhase = "Phase 2: Clarifying Strategy";
-  let phaseReason = "Tests positioning, category differentiation, and narrowing strategic focus.";
+  let wheelerPhase = "Phase 4: Creating Touchpoints";
+  let phaseReason = "Shows brand strategy translated into live advertising, content, and customer touchpoints.";
 
   if (/rebrand|logo|color|font|typography|packaging|design|visual|mascot|sonic/.test(text)) {
     wheelerPhase = "Phase 3: Designing Identity";
     phaseReason = "Demonstrates visual/sensory identity redesign and look-and-feel execution.";
-  } else if (/campaign|ad |commercial|billboard|social|video|unboxing|website|app|retail|store|ambassador|influencer|film/.test(text)) {
-    wheelerPhase = "Phase 4: Creating Touchpoints";
-    phaseReason = "Shows brand strategy translated into live customer touchpoints & campaigns.";
-  } else if (/survey|report|study|consumer|research|trend|behavior|audit|data/.test(text)) {
+  } else if (/positioning|strategy|naming|audience|gen z|d2c|brand brief/.test(text)) {
+    wheelerPhase = "Phase 2: Clarifying Strategy";
+    phaseReason = "Highlights strategic positioning, target audience focus, and differentiation.";
+  } else if (/survey|report|study|consumer|research|trend|behavior|audit|data|insight/.test(text)) {
     wheelerPhase = "Phase 1: Conducting Research";
-    phaseReason = "Surfaces consumer research and category insights prior to strategic decisions.";
-  } else if (/merger|acquire|acquisition|ipo|guideline|rollout|expansion|governance/.test(text)) {
+    phaseReason = "Surfaces consumer research and cultural insights driving modern marketing.";
+  } else if (/guideline|rollout|governance|champion|brand book/.test(text)) {
     wheelerPhase = "Phase 5: Managing Assets";
-    phaseReason = "Illustrates brand governance, portfolio changes, and large-scale rollouts.";
+    phaseReason = "Illustrates brand governance, launches, and asset consistency at scale.";
   }
 
   let dynamic6th = "6th Ed. Brand Dynamics";
   if (/\bai\b|artificial intelligence|genai|llm|automation/.test(text)) dynamic6th = "6th Ed. AI & Automation";
-  else if (/sustainab|green|eco|climate|plastic|ev|electric/.test(text)) dynamic6th = "6th Ed. Sustainability";
-  else if (/rebrand|redesign|logo/.test(text)) dynamic6th = "6th Ed. Before & After Rebrand";
-  else if (/creator|influencer|meme|viral|gen z|ambassador/.test(text)) dynamic6th = "6th Ed. Social & Cultural Agility";
-  else if (/funding|d2c|bharat|quick commerce|upi/.test(text)) dynamic6th = "Startup Positioning & Scale";
+  else if (/sustainab|green|eco|climate|plastic|ev/.test(text)) dynamic6th = "6th Ed. Sustainability";
+  else if (/rebrand|redesign|logo|packaging/.test(text)) dynamic6th = "6th Ed. Before & After Rebrand";
+  else if (/creator|influencer|meme|viral|gen z|ambassador|social/.test(text)) dynamic6th = "6th Ed. Social & Cultural Agility";
+  else if (/campaign|ad |film|festive|creative/.test(text)) dynamic6th = "Creative Campaign Craft";
 
   return { ...item, signalType, wheelerPhase, phaseReason, dynamic6th };
 }
