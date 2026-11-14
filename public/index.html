@@ -59,7 +59,7 @@
       gap: 12px;
       padding-bottom: 20px;
       border-bottom: 1px solid rgba(255,255,255,0.12);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .logo-mark {
@@ -73,7 +73,7 @@
 
     .nav-group-label {
       font-size: 11px; text-transform: uppercase; letter-spacing: 1.3px;
-      color: #7D828C; margin: 14px 12px 8px; font-weight: 600;
+      color: #7D828C; margin: 14px 12px 6px; font-weight: 600;
     }
 
     .nav-btn {
@@ -113,7 +113,7 @@
       background: rgba(217, 155, 38, 0.2); color: #F5C451; font-weight: 600; font-size: 11px;
     }
 
-    .main { margin-left: 278px; flex: 1; padding: 34px 42px; max-width: 1260px; width: 100%; }
+    .main { margin-left: 278px; flex: 1; padding: 34px 42px; max-width: 1280px; width: 100%; }
 
     .mobile-header {
       display: none; background: var(--bg-dark); color: #FFF; padding: 14px 18px;
@@ -121,13 +121,13 @@
     }
 
     .page-header {
-      margin-bottom: 26px; display: flex; flex-wrap: wrap;
+      margin-bottom: 24px; display: flex; flex-wrap: wrap;
       justify-content: space-between; align-items: flex-end; gap: 16px;
     }
 
     .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
     .page-title { font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.15; letter-spacing: -0.5px; }
-    .page-subtitle { color: var(--text-secondary); font-size: 15px; margin-top: 6px; max-width: 700px; }
+    .page-subtitle { color: var(--text-secondary); font-size: 15px; margin-top: 6px; max-width: 720px; }
 
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; }
@@ -181,19 +181,19 @@
 
     .phase-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
     .phase-tab {
-      flex: 1; min-width: 155px; background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 14px 16px; text-align: left; cursor: pointer;
+      flex: 1; min-width: 145px; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 13px 15px; text-align: left; cursor: pointer;
     }
     .phase-tab.active { border-color: var(--accent); background: var(--accent-soft); }
     .phase-tab .phase-num { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); }
-    .phase-tab .phase-name { font-weight: 700; font-size: 14px; margin-top: 2px; }
+    .phase-tab .phase-name { font-weight: 700; font-size: 13.5px; margin-top: 2px; }
 
-    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-paper); margin-bottom: 10px; cursor: pointer; }
+    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px; border-radius: 10px; background: var(--bg-paper); margin-bottom: 9px; cursor: pointer; }
     .checklist-item input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent); }
     .checklist-item.done span { text-decoration: line-through; color: var(--text-secondary); }
 
     .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 22px; }
-    .search-input { flex: 1; min-width: 230px; padding: 10px 15px; border-radius: 10px; border: 1px solid var(--border); background: #FFF; font-size: 14px; }
+    .search-input { flex: 1; min-width: 220px; padding: 10px 15px; border-radius: 10px; border: 1px solid var(--border); background: #FFF; font-size: 14px; }
     .filter-chip { padding: 7px 14px; border-radius: 99px; border: 1px solid var(--border); background: #FFF; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-secondary); }
     .filter-chip.active { background: var(--bg-dark); color: #FFF; border-color: var(--bg-dark); }
 
@@ -217,10 +217,19 @@
     .quiz-option.correct { background: #E5F4F1; border-color: #1D7A6E; color: #114D45; font-weight: 600; }
     .quiz-option.wrong { background: #FDECE7; border-color: #E04F26; color: #9E2E10; }
 
+    .reader-layout { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; align-items: start; }
+    .pdf-frame { width: 100%; height: 680px; border: 1px solid var(--border); border-radius: 12px; background: #26292E; }
+    .note-card { padding: 12px 14px; border-radius: 10px; background: var(--bg-paper); border: 1px solid var(--border); margin-bottom: 10px; }
+
     .section-view { display: none; }
     .section-view.active { display: block; animation: fadeIn 0.25s ease; }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 960px) {
+      .reader-layout { grid-template-columns: 1fr; }
+      .pdf-frame { height: 480px; }
+    }
 
     @media (max-width: 900px) {
       body { flex-direction: column; }
@@ -259,16 +268,17 @@
       <span class="nav-badge" id="badge-live">0</span>
     </button>
 
-    <div class="nav-group-label">6th Ed. Academy</div>
+    <div class="nav-group-label">6th Ed. Complete Academy</div>
     <button class="nav-btn" data-tab="basics" onclick="switchTab('basics')">
-      <span>📘</span> Part 1: Brand Basics
+      <span>📘</span> Part 1: Full Encyclopedia
+      <span class="nav-badge" id="badge-basics">24</span>
     </button>
     <button class="nav-btn" data-tab="process" onclick="switchTab('process')">
       <span>🧭</span> Part 2: 5-Phase Process
       <span class="nav-badge" id="badge-process">0%</span>
     </button>
 
-    <div class="nav-group-label">Vault & Practice</div>
+    <div class="nav-group-label">Vault, Book & Practice</div>
     <button class="nav-btn" data-tab="campaigns" onclick="switchTab('campaigns')">
       <span>🏆</span> Campaign Vault
       <span class="nav-badge" id="badge-vault">10</span>
@@ -276,24 +286,28 @@
     <button class="nav-btn" data-tab="lab" onclick="switchTab('lab')">
       <span>🛠️</span> Strategist Lab
     </button>
+    <button class="nav-btn" data-tab="reader" onclick="switchTab('reader')">
+      <span>📖</span> Book Reader & Notes
+    </button>
     <button class="nav-btn" data-tab="quiz" onclick="switchTab('quiz')">
       <span>⚡</span> Adda Challenge
     </button>
 
     <div class="sidebar-footer">
-      <div>Rooted in <strong>Designing Brand Identity (6th Ed.)</strong> by Alina Wheeler & Rob Meyerson</div>
+      <div>Inspired by <strong>Designing Brand Identity (6th Ed.)</strong> by Alina Wheeler & Rob Meyerson</div>
       <div class="rank-pill" id="strategist-rank">Rank: Curious Apprentice</div>
     </div>
   </aside>
 
   <main class="main">
 
+    <!-- 1. HOME -->
     <section id="view-home" class="section-view active">
       <div class="page-header">
         <div>
           <div class="eyebrow">Real-Time Brand & Startup Studio</div>
           <h2 class="page-title">Master Brand Identity as Markets Move</h2>
-          <p class="page-subtitle">Learn Alina Wheeler’s 6th Edition framework while tracking booming startups, rebrands, and viral campaigns in real time.</p>
+          <p class="page-subtitle">Complete 6th Edition study encyclopedia paired with real-time booming startups, rebrands, and viral campaign intelligence.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn btn-secondary" onclick="syncLiveTrends(true)">↻ Sync Live Now</button>
@@ -321,7 +335,7 @@
         <div class="card">
           <div class="pill pill-orange">Process Mastery</div>
           <div class="stat-num" id="home-checklist-pct">0%</div>
-          <p style="font-size:13px;color:var(--text-secondary);">Deliverables mastered across Wheeler’s 5 Phases</p>
+          <p style="font-size:13px;color:var(--text-secondary);">Deliverables mastered across Process & 5 Phases</p>
           <div class="progress-bar-bg"><div class="progress-bar-fill" id="home-progress-bar" style="width:0%"></div></div>
         </div>
 
@@ -340,6 +354,7 @@
       <div class="grid-3" id="home-live-preview"></div>
     </section>
 
+    <!-- 2. LIVE TREND PULSE -->
     <section id="view-live" class="section-view">
       <div class="page-header">
         <div>
@@ -369,31 +384,36 @@
       <div class="grid-2" id="live-trends-grid"></div>
     </section>
 
+    <!-- 3. PART 1: COMPLETE 6TH ED. ENCYCLOPEDIA -->
     <section id="view-basics" class="section-view">
       <div class="page-header">
         <div>
-          <div class="eyebrow">Part 1 · Designing Brand Identity (6th Ed.)</div>
-          <h2 class="page-title">Brand Fundamentals & Modern Dynamics</h2>
-          <p class="page-subtitle">Master the shared language of brands, identity taxonomy, and 6th Edition forces shaping modern startups.</p>
+          <div class="eyebrow">Part 1 · Complete 6th Edition Study Encyclopedia</div>
+          <h2 class="page-title">Brand Basics, Ideals, Elements & Modern Dynamics</h2>
+          <p class="page-subtitle">Every core concept from Part 1 of <em>Designing Brand Identity (6th Ed.)</em> synthesized into clear, actionable strategist guides.</p>
         </div>
       </div>
 
       <div class="filter-bar">
-        <button class="filter-chip active" onclick="filterBasics('all', this)">All Concepts</button>
-        <button class="filter-chip" onclick="filterBasics('fundamentals', this)">Brand Fundamentals</button>
-        <button class="filter-chip" onclick="filterBasics('elements', this)">Identity Elements</button>
-        <button class="filter-chip" onclick="filterBasics('dynamics', this)">6th Ed. Dynamics</button>
+        <input type="text" class="search-input" id="basics-search" placeholder="Search any 6th Ed. topic (e.g., Architecture, AI, Empathy, Emblem, Crisis, Tagline)..." oninput="renderBasics()" />
+        <button class="filter-chip active" onclick="filterBasics('all', this)">All (24)</button>
+        <button class="filter-chip" onclick="filterBasics('fundamentals', this)">Brand Basics</button>
+        <button class="filter-chip" onclick="filterBasics('ideals', this)">9 Brand Ideals</button>
+        <button class="filter-chip" onclick="filterBasics('elements', this)">Brand Elements</button>
+        <button class="filter-chip" onclick="filterBasics('dynamics', this)">Brand Dynamics</button>
+        <button class="filter-chip" onclick="filterBasics('beforeafter', this)">Before & After</button>
       </div>
 
       <div class="grid-2" id="basics-grid"></div>
     </section>
 
+    <!-- 4. PART 2: PROCESS BASICS & 5-PHASE METHODOLOGY -->
     <section id="view-process" class="section-view">
       <div class="page-header">
         <div>
-          <div class="eyebrow">Part 2 · Universal 5-Phase Methodology</div>
-          <h2 class="page-title">The Brand Identity Process</h2>
-          <p class="page-subtitle">Follow Alina Wheeler’s disciplined roadmap from Phase 1 Research through Phase 5 Asset Governance.</p>
+          <div class="eyebrow">Part 2 · Complete 39-Spread Methodology</div>
+          <h2 class="page-title">Process Basics & The 5 Phases</h2>
+          <p class="page-subtitle">Every single spread from Part 2 of the 6th Edition—from Process Management and IP through all 5 Phases and Brand Books.</p>
         </div>
       </div>
 
@@ -401,6 +421,7 @@
       <div id="phase-detail-container"></div>
     </section>
 
+    <!-- 5. CAMPAIGN VAULT -->
     <section id="view-campaigns" class="section-view">
       <div class="page-header">
         <div>
@@ -422,6 +443,7 @@
       <div class="grid-2" id="campaigns-grid"></div>
     </section>
 
+    <!-- 6. STRATEGIST LAB -->
     <section id="view-lab" class="section-view">
       <div class="page-header">
         <div>
@@ -486,6 +508,79 @@
       </div>
     </section>
 
+    <!-- 7. PRIVATE LOCAL BOOK READER & STUDY NOTES -->
+    <section id="view-reader" class="section-view">
+      <div class="page-header">
+        <div>
+          <div class="eyebrow">100% Private Local Companion</div>
+          <h2 class="page-title">Personal Book Reader & Study Notes</h2>
+          <p class="page-subtitle">Open your own personal PDF copy right from your device to read side-by-side with your chapter notes. Nothing is ever uploaded to any server.</p>
+        </div>
+        <label class="btn btn-primary" style="cursor:pointer;">
+          📂 Open Local PDF
+          <input type="file" id="local-pdf-input" accept="application/pdf" style="display:none;" onchange="loadLocalPdf(event)" />
+        </label>
+      </div>
+
+      <div class="reader-layout">
+        <div class="card" style="padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+            <span class="pill pill-teal" id="pdf-status-pill">🔒 Local-Only Mode (Zero Server Upload)</span>
+            <span style="font-size:12px;color:var(--text-secondary);" id="pdf-file-name">No PDF loaded yet</span>
+          </div>
+
+          <div id="pdf-empty-state" style="padding:54px 24px;text-align:center;background:var(--bg-paper);border:2px dashed var(--border);border-radius:12px;">
+            <div style="font-size:38px;margin-bottom:10px;">📖</div>
+            <h3 style="font-family:var(--font-serif);font-size:22px;margin-bottom:8px;">Read Your Own Book Copy Side-by-Side</h3>
+            <p style="font-size:14px;color:var(--text-secondary);max-width:440px;margin:0 auto 18px;">
+              If you own a personal PDF copy of <em>Designing Brand Identity</em> (or any marketing report/brand book), open it here privately on your screen while writing chapter takeaways on the right.
+            </p>
+            <label class="btn btn-primary" style="cursor:pointer;">
+              Choose PDF From My Device
+              <input type="file" accept="application/pdf" style="display:none;" onchange="loadLocalPdf(event)" />
+            </label>
+          </div>
+
+          <iframe id="pdf-frame" class="pdf-frame" style="display:none;" title="Local PDF Reader"></iframe>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:6px;">📝 Chapter Study Notes</h3>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;">Notes save automatically in your browser so you build your own strategist playbook.</p>
+
+          <div class="form-group">
+            <label>Book Section / Phase</label>
+            <select class="form-control" id="note-section">
+              <option>Part 1: Brand Basics & Architecture</option>
+              <option>Part 1: The 9 Brand Ideals</option>
+              <option>Part 1: Brand Elements & Dynamics</option>
+              <option>Part 1: Before & After Rebrands</option>
+              <option>Part 2: Process Basics & IP</option>
+              <option>Phase 1: Conducting Research</option>
+              <option>Phase 2: Clarifying Strategy</option>
+              <option>Phase 3: Designing Identity</option>
+              <option>Phase 4: Creating Touchpoints</option>
+              <option>Phase 5: Managing Assets</option>
+              <option>Part 3: Case Study Insight</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Key Concept / Page Note</label>
+            <textarea class="form-control" id="note-text" placeholder="Write your takeaway, quote, or brand observation here..."></textarea>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="saveStudyNote()">+ Save Note</button>
+            <button class="btn btn-outline btn-sm" onclick="exportNotes()">Download Notes (.txt)</button>
+          </div>
+
+          <div id="study-notes-list" style="max-height:360px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. QUIZ -->
     <section id="view-quiz" class="section-view">
       <div class="page-header">
         <div>
@@ -515,152 +610,351 @@
       { q: "“Look into a microscope with one eye and a telescope with the other.”", a: "Blake Deutsch, Phase 2: Clarifying Strategy" }
     ];
 
+    // COMPLETE PART 1 (6TH EDITION) ORIGINAL STUDY ENCYCLOPEDIA
     const BASICS_DATA = [
       {
-        cat: "fundamentals", badge: "Fundamentals",
-        title: "Brand vs. Brand Identity vs. Branding",
-        summary: "Three terms often confused by rookies—and sharply separated by strategists.",
+        cat: "fundamentals", badge: "Brand Basics",
+        title: "Brand, Branding & Brand Identity",
+        summary: "The three foundational pillars every member of a brand team must separate cleanly.",
         points: [
-          "<strong>Brand:</strong> The gut feeling people have about a product or organization. Your audience owns it.",
-          "<strong>Brand Identity:</strong> The tangible, sensory expression—logos, colors, typography, voice, packaging, sound.",
-          "<strong>Branding:</strong> The continuous, disciplined process of building awareness and extending loyalty."
+          "<strong>Brand:</strong> The emotional gut feeling people hold about a product, service, or company. Organizations influence it, but customers ultimately own it.",
+          "<strong>Brand Identity:</strong> The tangible, sensory expression—logos, colors, typography, voice, packaging, sound, and environments—designed to build recognition.",
+          "<strong>Branding:</strong> The ongoing, disciplined process of building awareness, differentiating from rivals, and turning first-time buyers into lifelong advocates."
         ]
       },
       {
-        cat: "fundamentals", badge: "Fundamentals",
-        title: "The 9 Brand Ideals (Wheeler Framework)",
-        summary: "What separates forgettable startups from enduring cultural icons?",
+        cat: "fundamentals", badge: "Brand Basics",
+        title: "Brand Strategy, Why Invest & Stakeholders",
+        summary: "Why branding is a boardroom growth asset—not a cosmetic expense.",
         points: [
-          "<strong>Vision & Meaning:</strong> A compelling purpose beyond short-term revenue.",
-          "<strong>Authenticity & Coherence:</strong> Every touchpoint feels like one unmistakable voice.",
-          "<strong>Differentiation & Flexibility:</strong> Standing apart while adapting across mobile, retail, and AI surfaces.",
-          "<strong>Value & Commitment:</strong> Measurable ROI backed by disciplined long-term asset management."
+          "<strong>Brand Strategy:</strong> A central unifying idea aligning business goals, target audience needs, and competitive positioning.",
+          "<strong>Why Invest:</strong> Strong brands command price premiums, shorten sales cycles, attract top talent, and survive market downturns.",
+          "<strong>Stakeholders & Culture:</strong> Brands are built from the inside out—employees, partners, investors, and communities all shape perception."
         ]
       },
       {
-        cat: "elements", badge: "Identity Elements",
-        title: "Brandmark Taxonomy",
-        summary: "Choosing a mark architecture is strategic—not merely decorative.",
+        cat: "fundamentals", badge: "Brand Basics",
+        title: "Brand Experience & Brand Architecture",
+        summary: "How multi-product companies organize portfolios so customers never feel confused.",
         points: [
-          "<strong>Wordmarks:</strong> Stylized name (Google, Zomato). Best for building direct name recall.",
-          "<strong>Letterforms:</strong> Single-letter anchor (Netflix 'N'). Essential for app icons & favicons.",
-          "<strong>Pictorial & Abstract Marks:</strong> Recognizable symbols (Apple, Nike Swoosh).",
-          "<strong>Emblems:</strong> Name enclosed inside a badge/crest (Starbucks, Harley-Davidson)."
+          "<strong>Brand Experience:</strong> The sum of every interaction—from ad discovery and website UX to customer support and unboxing.",
+          "<strong>Monolithic Architecture:</strong> One master brand everywhere (e.g., FedEx, Google, Virgin).",
+          "<strong>Endorsed & Pluralistic Architecture:</strong> Sub-brands backed by a parent (e.g., Marriott Courtyard) or independent house-of-brands (e.g., P&G, Hindustan Unilever)."
         ]
       },
       {
-        cat: "elements", badge: "Identity Elements",
-        title: "Taglines & Brand Characters",
-        summary: "Verbal hooks and visual mascots that bypass rational skepticism.",
+        cat: "fundamentals", badge: "Brand Basics",
+        title: "Visual Identity, Voice & Brand Governance",
+        summary: "Balancing expressive creativity with strict long-term consistency.",
         points: [
-          "<strong>Taglines:</strong> Short phrases capturing essence (Nike 'Just Do It', Amul 'The Taste of India').",
-          "<strong>Characters / Mascots:</strong> Humanized ambassadors (Amul Girl, Duolingo Owl) built for social agility."
+          "<strong>Visual Identity:</strong> Triggers instant recognition before a single word is read through distinct form, color, and layout.",
+          "<strong>Messaging & Voice:</strong> How a brand sounds across headlines, error screens, chatbots, and CEO interviews.",
+          "<strong>Brand Governance:</strong> Rules, training, and asset hubs ensuring teams worldwide protect brand equity over time."
         ]
       },
       {
-        cat: "dynamics", badge: "6th Ed. Dynamics",
-        title: "AI, Automation & Big Data Personalization",
-        summary: "New in the 6th Edition: How algorithms reshape brand identity.",
+        cat: "ideals", badge: "9 Brand Ideals",
+        title: "Ideals 1–3: Vision, Meaning & Authenticity",
+        summary: "The strategic soul behind enduring brands.",
         points: [
-          "<strong>Generative AI:</strong> Speeds up concept exploration—but generic prompts erode differentiation.",
-          "<strong>Big Data Touchpoints:</strong> Turning usage insights into shareable cultural rituals (e.g., Spotify Wrapped)."
+          "<strong>Vision:</strong> Inspiring leadership that sees future possibilities and rallies teams around a bold North Star.",
+          "<strong>Meaning:</strong> Standing for a clear idea, emotion, or cultural value that goes beyond functional features.",
+          "<strong>Authenticity:</strong> Knowing who you truly are—never faking values or copying a rival's personality."
         ]
       },
       {
-        cat: "dynamics", badge: "6th Ed. Dynamics",
-        title: "Sustainability, Social Justice & Rebrands",
-        summary: "Why modern brands audit purpose alongside visual modernization.",
+        cat: "ideals", badge: "9 Brand Ideals",
+        title: "Ideals 4–6: Coherence, Flexibility & Commitment",
+        summary: "How identities stay recognizable across fast-changing channels.",
         points: [
-          "<strong>Zero Greenwashing:</strong> Eco-claims must be visible in packaging and supply-chain transparency.",
-          "<strong>Before & After Rebrands:</strong> Driven by EV shifts, digital legibility, or shedding legacy perceptions (e.g., Kia, Burger King)."
+          "<strong>Coherence:</strong> Every touchpoint—app UI, packaging, retail store, invoice—feels unmistakably part of one family.",
+          "<strong>Flexibility:</strong> Identity systems engineered to adapt across smartwatches, dark mode, billboards, and new product lines.",
+          "<strong>Commitment:</strong> Actively managing, funding, and defending the brand through leadership changes."
+        ]
+      },
+      {
+        cat: "ideals", badge: "9 Brand Ideals",
+        title: "Ideals 7–9: Value, Differentiation & Longevity",
+        summary: "Turning creative craft into measurable business durability.",
+        points: [
+          "<strong>Value:</strong> Delivering tangible ROI, customer trust, and measurable brand equity growth.",
+          "<strong>Differentiation:</strong> Clearly answering why customers should choose you over every alternative.",
+          "<strong>Longevity:</strong> Evolving thoughtfully over decades without erasing hard-earned recognition."
+        ]
+      },
+      {
+        cat: "elements", badge: "Brand Elements",
+        title: "Names & Taglines",
+        summary: "The verbal anchors customers carry in memory and type into search bars.",
+        points: [
+          "<strong>Brand Names:</strong> Can be Founder-based (Tata), Descriptive (Paytm), Invented (Kodak), Metaphorical (Nike), or Acronymic (IBM). Must pass trademark & cultural checks.",
+          "<strong>Taglines:</strong> Concise phrases capturing positioning or attitude—Imperative (Just Do It), Descriptive, Superlative, or Provocative."
+        ]
+      },
+      {
+        cat: "elements", badge: "Brand Elements",
+        title: "Brandmarks: Wordmarks & Letterform Marks",
+        summary: "Typographic marks built directly around the brand's name or initial.",
+        points: [
+          "<strong>Wordmarks:</strong> Custom-crafted logotypes of the full name (Google, Zomato, Sony). Ideal for newer brands building name awareness.",
+          "<strong>Letterform Marks:</strong> Single-letter graphic anchors (Netflix 'N', McDonald's 'M') engineered for tiny mobile favicons and app tiles."
+        ]
+      },
+      {
+        cat: "elements", badge: "Brand Elements",
+        title: "Pictorial, Abstract, Emblems & Dynamic Marks",
+        summary: "Symbolic and living mark architectures.",
+        points: [
+          "<strong>Pictorial & Abstract Marks:</strong> Literal icons (Apple, Shell) vs. geometric forms conveying big ideas (Nike Swoosh, Pepsi).",
+          "<strong>Emblems:</strong> Name locked inside a crest or badge (Starbucks, Harley-Davidson), signaling heritage and craft.",
+          "<strong>Dynamic Marks:</strong> Fluid identities that change color, pattern, or motion while retaining a fixed frame (MTV, Google Doodles)."
+        ]
+      },
+      {
+        cat: "elements", badge: "Brand Elements",
+        title: "Brand Characters & Mascots",
+        summary: "Humanized ambassadors that create instant emotional warmth.",
+        points: [
+          "<strong>Why Characters Work:</strong> They tell stories, express humor, and bridge language barriers effortlessly (Amul Girl, Michelin Man, Duolingo Owl).",
+          "<strong>Modern Advantage:</strong> Mascots thrive on short-form video, WhatsApp stickers, and real-time social banter."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Social Justice & Sustainability",
+        summary: "Values-led branding in an era of radical consumer scrutiny.",
+        points: [
+          "<strong>Social Justice:</strong> Taking authentic stances backed by internal hiring, pay equity, and real community action—never performative hashtags.",
+          "<strong>Sustainability:</strong> Designing out excess packaging, communicating verifiable climate metrics, and eliminating greenwashing."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Global & Local ('Glocal' Strategy)",
+        summary: "Scaling globally while honoring regional culture, scripts, and humor.",
+        points: [
+          "<strong>Global Cohesion:</strong> Core brandmark, mission, and quality standards stay consistent worldwide.",
+          "<strong>Local Relevance:</strong> Translating campaigns, packaging sizes, flavors, and vernacular scripts (e.g., Hindi/regional UI) for local hearts."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Artificial Intelligence & Big Data Analytics",
+        summary: "6th Edition frontier: Algorithms as creative partners and brand touchpoints.",
+        points: [
+          "<strong>AI in Branding:</strong> Accelerates research synthesis, naming brainstorms, and visual prototyping—while human strategists protect originality and ethics.",
+          "<strong>Big Data Analytics:</strong> Using behavioral data to personalize experiences and craft viral data storytelling (like Spotify Wrapped)."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Social Media, Digital Interfaces & Mobile Apps",
+        summary: "Your app icon and feed are often the customer's very first brand encounter.",
+        points: [
+          "<strong>Social Media:</strong> Two-way community dialogue where tone of voice, meme speed, and creator collaborations build affinity.",
+          "<strong>Digital Interfaces & Mobile Apps:</strong> Motion, haptics, micro-copy, dark mode, and 16px legibility are core identity requirements today."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Evidence-Based Marketing",
+        summary: "Ground brand decisions in real behavioral science—not gut hunches alone.",
+        points: [
+          "<strong>Distinctive Brand Assets:</strong> Research shows consistent colors, shapes, and sounds drive mental availability faster than ever-changing slogans.",
+          "<strong>Measurement:</strong> Pairing brand tracking (recall, consideration) with conversion metrics proves branding's financial impact."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Private Labeling, Brand Licensing & Certification",
+        summary: "Strategic business models that monetize trust and quality standards.",
+        points: [
+          "<strong>Private Labeling:</strong> Retailers creating beloved own-label brands (e.g., Kirkland, Blinkit/Zepto private labels) with designer packaging.",
+          "<strong>Licensing & Certification:</strong> Extending brand equity to partners or granting trusted third-party seals (Fairtrade, Energy Star, FSSAI/ISI)."
+        ]
+      },
+      {
+        cat: "dynamics", badge: "Brand Dynamics",
+        title: "Crisis Communications & Personal Branding",
+        summary: "Protecting trust under pressure—for companies and individual leaders.",
+        points: [
+          "<strong>Crisis Communications:</strong> Speed, radical transparency, accountability, and empathy determine whether a brand recovers or collapses.",
+          "<strong>Personal Branding:</strong> Founders and creators build distinct personal reputations that directly amplify startup trust."
+        ]
+      },
+      {
+        cat: "beforeafter", badge: "Before & After",
+        title: "Brandmark Redesign & Modernization",
+        summary: "When—and why—iconic companies update their primary visual mark.",
+        points: [
+          "<strong>Drivers:</strong> Removing 3D bevels for crisp mobile rendering, signaling EV/tech pivots (Kia), or reviving nostalgic warmth (Burger King).",
+          "<strong>Rule of Thumb:</strong> Preserve recognizable DNA unless the old mark actively damages credibility."
+        ]
+      },
+      {
+        cat: "beforeafter", badge: "Before & After",
+        title: "Packaging Redesign & Renaming",
+        summary: "High-stakes transformations that reshape shelf impact and category positioning.",
+        points: [
+          "<strong>Packaging Redesign:</strong> Simplifying cluttered labels into bold hierarchy that wins the 3-second retail or quick-commerce scroll.",
+          "<strong>Renaming:</strong> Triggered by mergers, expansion beyond original geography/product (e.g., Dunkin' Donuts → Dunkin', Facebook → Meta), or trademark conflicts."
+        ]
+      },
+      {
+        cat: "fundamentals", badge: "Brand Basics",
+        title: "Quick Reference: Strategist Vocabulary",
+        summary: "Terms to drop naturally and accurately in agency & product interviews.",
+        points: [
+          "<strong>Brand Equity:</strong> The commercial value derived from customer perception and loyalty.",
+          "<strong>Touchpoint:</strong> Any digital, physical, or human moment where someone experiences the brand.",
+          "<strong>Brand Audit:</strong> Comprehensive diagnostic of visual, verbal, and competitive assets before strategizing."
+        ]
+      },
+      {
+        cat: "ideals", badge: "9 Brand Ideals",
+        title: "How to Critique Any Brand Using the 9 Ideals",
+        summary: "Turn Wheeler's 9 Ideals into a practical evaluation checklist.",
+        points: [
+          "<strong>Ask 3 Diagnostic Questions:</strong> Is the promise clear in 5 seconds (Meaning/Differentiation)? Does the website match the packaging (Coherence)? Will this still feel true in 10 years (Longevity)?",
+          "<strong>Practice Tool:</strong> Test any booming startup from Live Pulse using the 25-point Scorecard inside the Strategist Lab!"
+        ]
+      },
+      {
+        cat: "elements", badge: "Brand Elements",
+        title: "Sensory Elements Beyond Sight",
+        summary: "Sound, touch, scent, and motion lock brands deeper into memory.",
+        points: [
+          "<strong>Sonic Branding:</strong> 2-second audio signatures (Netflix 'Ta-dum', Intel chime, UPI payment chimes) create instant eyes-free recall.",
+          "<strong>Tactile Craft:</strong> Matte soft-touch boxes, embossed paper, and bottle silhouettes communicate quality before reading a word."
+        ]
+      },
+      {
+        cat: "beforeafter", badge: "Before & After",
+        title: "Rebrand Risk Checklist",
+        summary: "Avoiding infamous 'blanding' traps and customer backlash.",
+        points: [
+          "<strong>Beware 'Blanding':</strong> Stripping away every quirk for generic sans-serif black text erases memorability.",
+          "<strong>Test First:</strong> Validate changes through Phase 3 Trial Applications before committing millions to signage and packaging."
         ]
       }
     ];
 
+    // COMPLETE PART 2 (PROCESS BASICS + ALL 5 PHASES & 39 SPREADS)
     const PHASES_DATA = [
+      {
+        id: "pb", num: "Process Basics", title: "Managing the Process",
+        tagline: "Answering the #1 client question: 'Why does building a great brand take time?'",
+        overview: "Before Phase 1 begins, successful brand initiatives align budgets, timelines, decision-makers, intellectual property protection, and success metrics.",
+        keyConcepts: [
+          { name: "Managing the Process & Brand Initiatives", desc: "Scope varies from 3-month startup sprints to 18-month global enterprise transformations—discipline keeps creativity on schedule." },
+          { name: "Measuring Success", desc: "Define baseline KPIs early: brand awareness, Net Promoter Score (NPS), conversion lift, and employee pride." },
+          { name: "Collaboration & Decision Making", desc: "Designate clear decision-makers up front so projects don't get watered down by design-by-committee." },
+          { name: "Intellectual Property & Design Management", desc: "Clear trademarks, copyrights, and domain rights early before falling in love with an unusable name or logo." }
+        ],
+        checklist: [
+          "Defined project scope, timeline, and budget milestones",
+          "Identified final decision-makers and project champions",
+          "Established baseline brand & business KPIs",
+          "Planned early trademark/IP screening into the schedule"
+        ]
+      },
       {
         id: "p1", num: "Phase 1", title: "Conducting Research",
         tagline: "Clarify vision, values, and category reality before designing a single pixel.",
-        overview: "Phase 1 uncovers how leadership, customers, and competitors perceive the brand—exposing the strategic gap between perception and aspiration.",
+        overview: "Phase 1 uncovers how leadership, customers, and competitors perceive the brand—exposing the strategic gap between current perception and future aspiration.",
         keyConcepts: [
-          { name: "Defining the Problem", desc: "Align leadership on why the brand initiative matters now." },
-          { name: "Market & Usability Research", desc: "Customer interviews and UX testing to uncover real friction." },
-          { name: "Marketing, Competitive & Verbal Audits", desc: "Audit competitor positioning, messaging habits, and visual clichés." },
-          { name: "Findings Report", desc: "Synthesize raw observations into sharp strategic opportunities." }
+          { name: "Defining the Problem", desc: "Interview executives and stakeholders to align on the true business challenge and goals." },
+          { name: "Market Research & Usability Testing", desc: "Combine qualitative customer interviews, surveys, and UX testing to uncover real friction." },
+          { name: "Marketing Audit", desc: "Collect and examine every brochure, deck, ad, and digital asset currently in market." },
+          { name: "Competitive Audit", desc: "Map rivals' logos, colors, positioning claims, and pricing to spot whitespace." },
+          { name: "Verbal Audit", desc: "Analyze existing taglines, product names, and tone of voice for jargon or inconsistency." },
+          { name: "Findings Report", desc: "The capstone deliverable synthesizing all research into clear strategic recommendations." }
         ],
         checklist: [
-          "Interviewed key stakeholders to align on business goals",
+          "Interviewed key stakeholders to define the problem",
+          "Reviewed market research & usability testing insights",
+          "Completed Marketing Audit of all existing brand assets",
           "Completed Competitive Audit of top 3–5 category rivals",
-          "Conducted Verbal Audit of existing taglines & UX copy",
-          "Synthesized insights into a Findings Report"
+          "Completed Verbal Audit of messaging, naming & tone",
+          "Delivered a concise Findings Report for leadership alignment"
         ]
       },
       {
         id: "p2", num: "Phase 2", title: "Clarifying Strategy",
         tagline: "Methodical examination meets strategic imagination.",
-        overview: "Strategy is choosing what NOT to say. Here you narrow focus, define positioning, write the Brand Brief, and validate naming.",
+        overview: "Strategy is choosing what NOT to say. Here you narrow focus, claim distinct positioning, write the Brand Brief, and finalize naming decisions.",
         keyConcepts: [
-          { name: "Narrowing the Focus", desc: "Distill complex offerings into one unmistakable core promise." },
-          { name: "Positioning", desc: "Claim distinct mental real estate relative to alternatives." },
-          { name: "The Brand Brief", desc: "The guiding contract covering audience, point of difference, and voice." },
-          { name: "Naming / Renaming", desc: "Distinctive, memorable, future-proof, and trademark-clear." }
+          { name: "Narrowing the Focus", desc: "Distill sprawling product lists and company history into one sharp, memorable core idea." },
+          { name: "Positioning", desc: "Define the target audience, frame of reference, point of difference, and reason to believe." },
+          { name: "The Brand Brief", desc: "The sacred written contract aligning executives, designers, and writers on vision, audience, and personality." },
+          { name: "Naming / Renaming", desc: "Brainstorm, screen, and legally clear distinctive, memorable, globally safe brand and product names." }
         ],
         checklist: [
-          "Defined a single-minded Positioning Statement",
-          "Secured sign-off on the Brand Brief",
-          "Validated target personas & value proposition",
-          "Verified domain & trademark availability (if naming)"
+          "Narrowed strategic focus to one unmistakable core promise",
+          "Crafted a differentiated Positioning Statement",
+          "Written and secured sign-off on the Brand Brief",
+          "Screened brand/product names for linguistics, domains & trademarks"
         ]
       },
       {
         id: "p3", num: "Phase 3", title: "Designing Identity",
         tagline: "Translating intelligence into a cohesive visual & sensory system.",
-        overview: "Design an interconnected system—color, typography, iconography, motion, and sound—tested on real-world trial applications.",
+        overview: "Rather than drawing an isolated 'logo', designers craft a complete sensory ecosystem tested across realistic applications before executive sign-off.",
         keyConcepts: [
-          { name: "Identity System & Look-and-Feel", desc: "Works seamlessly from 16px app icons to outdoor hoardings." },
-          { name: "Color & Typography", desc: "Signal category differentiation and unmistakable voice." },
-          { name: "Sound & Sensory Cues", desc: "Sonic mnemonics, tactile textures, and motion choreography." },
-          { name: "Trial Applications", desc: "Mock up the identity on packaging, apps, and ads before approval." }
+          { name: "Identity System Design & Look and Feel", desc: "Architect an unmistakable visual language—grid, imagery style, and mark lockups—that scales from 16px to 40ft." },
+          { name: "Color & Typography", desc: "Assign strategic primary/secondary palettes (with contrast accessibility) and expressive type hierarchies." },
+          { name: "Iconography", desc: "Craft custom UI and wayfinding icon families sharing consistent stroke weight and personality." },
+          { name: "Sound & Other Senses", desc: "Design sonic mnemonics, motion choreography, packaging textures, and environmental atmosphere." },
+          { name: "Trial Applications & Presentation", desc: "Mock up the identity on real websites, packaging, and signage—then present the rationale tied back to the Brand Brief." }
         ],
         checklist: [
-          "Built scalable lockups (primary, secondary, favicon)",
-          "Defined accessible primary & secondary color palettes",
-          "Selected display & body typography hierarchy",
-          "Stress-tested across 3+ Trial Applications"
+          "Designed scalable brandmark lockups (primary, stacked, icon/favicon)",
+          "Defined accessible Color system & Typography hierarchy",
+          "Created unified Iconography & Photography/Illustration look-and-feel",
+          "Explored Sound, motion, or tactile sensory cues",
+          "Validated system across 3+ realistic Trial Applications",
+          "Presented design concepts anchored directly to Phase 2 strategy"
         ]
       },
       {
         id: "p4", num: "Phase 4", title: "Creating Touchpoints",
         tagline: "Every customer contact builds—or erodes—trust.",
-        overview: "Bring the approved identity alive across websites, apps, packaging, ads, retail environments, and unboxing experiences.",
+        overview: "Finalize and produce the approved identity across every digital, physical, and environmental channel where customers meet your brand.",
         keyConcepts: [
-          { name: "Content Strategy & Website", desc: "Align UX, storytelling, and editorial tone." },
-          { name: "Product Design & Packaging", desc: "Packaging acts as the silent salesperson and unboxing hero." },
-          { name: "Advertising & Campaigns", desc: "High-impact creative that reinforces brand recognition." },
-          { name: "Environments & Ephemera", desc: "Retail signage, uniforms, stickers, and delivery bags." }
+          { name: "Content Strategy & Website", desc: "Align SEO, editorial storytelling, UX flows, and mobile responsiveness with brand voice." },
+          { name: "Collateral & Stationery", desc: "Sales decks, brochures, business cards, invoices, and email signatures that ooze professionalism." },
+          { name: "Product Design & Packaging", desc: "Industrial form, unboxing choreography, shelf standout, and sustainable materials." },
+          { name: "Advertising", desc: "High-impact digital, print, video, and OOH campaigns that stay unmistakably on-brand." },
+          { name: "Branded Environments, Signage & Wayfinding", desc: "Retail stores, offices, exhibition booths, and clear directional signage." },
+          { name: "Vehicles, Uniforms & Ephemera", desc: "Delivery fleets, team apparel, stickers, tote bags, and memorable merch." }
         ],
         checklist: [
-          "Mapped full customer journey to prioritize key touchpoints",
-          "Updated digital flagship (Website, App UI, Social)",
-          "Aligned packaging & campaign templates",
-          "Audited physical/environmental touchpoints"
+          "Prioritized high-impact touchpoints across the customer journey",
+          "Aligned Content Strategy, Website, and App UI",
+          "Updated Sales Collateral, Pitch Decks & Stationery",
+          "Designed Product/Packaging & Unboxing experience",
+          "Built on-brand Advertising & Social templates",
+          "Prepared Environments, Signage, Vehicles, Uniforms & Ephemera"
         ]
       },
       {
         id: "p5", num: "Phase 5", title: "Managing Assets",
-        tagline: "Launching is Day 1. Governance protects brand equity.",
-        overview: "Launch internally first, empower brand champions, and publish living guidelines inside an accessible Online Brand Center.",
+        tagline: "Launching is Day 1. Governance protects brand equity for decades.",
+        overview: "Execute an unforgettable internal-first launch, empower brand champions, and publish living guidelines inside a cloud-based Online Brand Center.",
         keyConcepts: [
-          { name: "Launching & Brand Champions", desc: "Employees are your most credible ambassadors—launch to them first." },
-          { name: "Changing Brand Assets", desc: "Plan phased rollouts to avoid costly waste." },
-          { name: "Online Brand Centers", desc: "Cloud hubs for logos, fonts, templates, and dos/don'ts." },
-          { name: "Guidelines & Brand Books", desc: "Inspire creativity within clear guardrails." }
+          { name: "Changing Brand Assets", desc: "Audit inventories and plan smart phased rollouts so physical assets transition smoothly without waste." },
+          { name: "Launching & Building Brand Champions", desc: "Launch internally to employees FIRST—informed staff are your strongest brand ambassadors." },
+          { name: "Online Brand Centers", desc: "Self-service digital hubs housing downloadable logos, fonts, templates, and approved imagery." },
+          { name: "Guidelines & Guidelines Content", desc: "Clear, visual rules covering logo clear space, color codes (HEX/RGB/CMYK/Pantone), typography, and voice dos/don'ts." },
+          { name: "Brand Books", desc: "Inspiring culture books celebrating purpose, values, and storytelling for new hires and partners." }
         ],
         checklist: [
-          "Executed internal employee launch before external PR",
-          "Published living Brand Guidelines & Voice Manual",
-          "Launched Online Brand Center / Asset Kit",
-          "Set ongoing brand governance & equity KPI reviews"
+          "Planned phased transition for Changing Brand Assets",
+          "Executed internal employee launch & Brand Champion training",
+          "Launched external announcement & PR rollout",
+          "Built an Online Brand Center for instant team/agency asset access",
+          "Published practical Brand Guidelines (visual + verbal rules)",
+          "Created a culture-inspiring Brand Book & ongoing review cadence"
         ]
       }
     ];
@@ -878,8 +1172,9 @@
       checkedItems: {},
       readCampaigns: [],
       pinnedCampaigns: [],
+      studyNotes: [],
       quizBest: 0,
-      activePhase: 0,
+      activePhase: 1,
       campaignFilter: "all",
       basicsFilter: "all",
       liveFilter: "all",
@@ -894,6 +1189,7 @@
     let quizScore = 0;
     let quizAnswered = false;
     let engineMode = "connecting";
+    let currentPdfUrl = null;
 
     function loadState() {
       try {
@@ -926,6 +1222,7 @@
       return hrs < 24 ? `${hrs}h ago` : `${Math.round(hrs / 24)}d ago`;
     }
 
+    // ---------------- LIVE TRENDS ----------------
     async function syncLiveTrends(force = false) {
       const btn = document.getElementById("sync-btn");
       const meta = document.getElementById("live-sync-meta");
@@ -1144,6 +1441,77 @@
       alert("Saved to Campaign Vault!");
     }
 
+    // ---------------- LOCAL BOOK READER & NOTES ----------------
+    function loadLocalPdf(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+      currentPdfUrl = URL.createObjectURL(file);
+
+      document.getElementById("pdf-empty-state").style.display = "none";
+      const frame = document.getElementById("pdf-frame");
+      frame.src = currentPdfUrl;
+      frame.style.display = "block";
+      document.getElementById("pdf-file-name").textContent = file.name;
+      document.getElementById("pdf-status-pill").textContent = "✓ Loaded Privately in Browser";
+    }
+
+    function saveStudyNote() {
+      const section = document.getElementById("note-section").value;
+      const text = document.getElementById("note-text").value.trim();
+      if (!text) return;
+
+      if (!Array.isArray(state.studyNotes)) state.studyNotes = [];
+      state.studyNotes.unshift({
+        id: "n_" + Date.now(),
+        section,
+        text,
+        createdAt: new Date().toISOString()
+      });
+      document.getElementById("note-text").value = "";
+      saveState();
+      renderStudyNotes();
+    }
+
+    function deleteStudyNote(id) {
+      state.studyNotes = (state.studyNotes || []).filter(n => n.id !== id);
+      saveState();
+      renderStudyNotes();
+    }
+
+    function renderStudyNotes() {
+      const list = document.getElementById("study-notes-list");
+      const notes = state.studyNotes || [];
+      if (!notes.length) {
+        list.innerHTML = `<p style="font-size:13px;color:var(--text-secondary);">No saved notes yet. Add your first book takeaway above!</p>`;
+        return;
+      }
+      list.innerHTML = notes.map(n => `
+        <div class="note-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="pill pill-orange">${escapeHtml(n.section)}</span>
+            <button onclick="deleteStudyNote('${escapeHtml(n.id)}')" style="border:none;background:none;color:var(--text-secondary);cursor:pointer;font-size:12px;">Delete</button>
+          </div>
+          <p style="font-size:13.5px;white-space:pre-wrap;">${escapeHtml(n.text)}</p>
+          <small style="color:var(--text-secondary);font-size:11px;">${formatRelativeTime(n.createdAt)}</small>
+        </div>
+      `).join("");
+    }
+
+    function exportNotes() {
+      const notes = state.studyNotes || [];
+      if (!notes.length) { alert("Write at least one note first!"); return; }
+      const content = notes.map(n => `[${n.section}]\n${n.text}\n(${n.createdAt})\n---`).join("\n\n");
+      const blob = new Blob([content], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "marketing-adda-study-notes.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ---------------- NAVIGATION & STATS ----------------
     function switchTab(tabId) {
       document.querySelectorAll(".section-view").forEach(el => el.classList.remove("active"));
       document.getElementById("view-" + tabId).classList.add("active");
@@ -1168,6 +1536,7 @@
       document.getElementById("home-checklist-pct").textContent = pct + "%";
       document.getElementById("home-progress-bar").style.width = pct + "%";
       document.getElementById("badge-process").textContent = pct + "%";
+      document.getElementById("badge-basics").textContent = BASICS_DATA.length;
 
       const allVaultCount = STATIC_CAMPAIGNS.length + (state.pinnedCampaigns?.length || 0);
       document.getElementById("badge-vault").textContent = allVaultCount;
@@ -1180,14 +1549,15 @@
         document.getElementById("home-live-status").textContent = `${engineMode} · ${formatRelativeTime(state.lastSync)}`;
       }
 
-      const points = doneCount + state.readCampaigns.length + (state.pinnedCampaigns?.length || 0) * 2 + state.quizBest;
+      const points = doneCount + state.readCampaigns.length + (state.pinnedCampaigns?.length || 0) * 2 + (state.studyNotes?.length || 0) + state.quizBest;
       let rank = "Curious Apprentice";
-      if (points >= 28) rank = "Chief Brand Officer";
-      else if (points >= 18) rank = "Lead Brand Architect";
-      else if (points >= 8) rank = "Rising Strategist";
+      if (points >= 34) rank = "Chief Brand Officer";
+      else if (points >= 20) rank = "Lead Brand Architect";
+      else if (points >= 9) rank = "Rising Strategist";
       document.getElementById("strategist-rank").textContent = "Rank: " + rank;
     }
 
+    // ---------------- PART 1 ENCYCLOPEDIA ----------------
     function filterBasics(cat, btn) {
       state.basicsFilter = cat;
       document.querySelectorAll("#view-basics .filter-chip").forEach(c => c.classList.remove("active"));
@@ -1196,8 +1566,24 @@
     }
 
     function renderBasics() {
-      const items = state.basicsFilter === "all" ? BASICS_DATA : BASICS_DATA.filter(b => b.cat === state.basicsFilter);
-      document.getElementById("basics-grid").innerHTML = items.map(item => `
+      const q = (document.getElementById("basics-search")?.value || "").toLowerCase();
+      const items = BASICS_DATA.filter(b => {
+        const matchCat = state.basicsFilter === "all" || b.cat === state.basicsFilter;
+        const matchQ = !q ||
+          b.title.toLowerCase().includes(q) ||
+          b.summary.toLowerCase().includes(q) ||
+          b.badge.toLowerCase().includes(q) ||
+          b.points.some(p => p.toLowerCase().includes(q));
+        return matchCat && matchQ;
+      });
+
+      const grid = document.getElementById("basics-grid");
+      if (!items.length) {
+        grid.innerHTML = `<div class="card"><p>No topics match that search. Try another term like "AI", "Emblem", or "Vision".</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(item => `
         <div class="card">
           <div class="pill pill-orange" style="margin-bottom:10px;">${item.badge}</div>
           <h3 style="font-size:19px;margin-bottom:6px;">${item.title}</h3>
@@ -1209,6 +1595,7 @@
       `).join("");
     }
 
+    // ---------------- PART 2 PROCESS & 5 PHASES ----------------
     function renderPhases() {
       document.getElementById("phase-tabs").innerHTML = PHASES_DATA.map((p, idx) => `
         <button class="phase-tab ${state.activePhase === idx ? 'active' : ''}" onclick="selectPhase(${idx})">
@@ -1226,7 +1613,7 @@
           <p style="color:var(--text-secondary);margin-bottom:22px;">${p.overview}</p>
           <div class="grid-2">
             <div>
-              <h4 style="margin-bottom:12px;">Core Book Concepts</h4>
+              <h4 style="margin-bottom:12px;">All 6th Ed. Spreads & Concepts</h4>
               <div style="display:flex;flex-direction:column;gap:12px;">
                 ${p.keyConcepts.map(kc => `
                   <div style="padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-paper);border-radius:0 10px 10px 0;">
@@ -1257,6 +1644,7 @@
     function selectPhase(idx) { state.activePhase = idx; saveState(); renderPhases(); }
     function toggleCheck(key) { state.checkedItems[key] = !state.checkedItems[key]; saveState(); renderPhases(); }
 
+    // ---------------- CAMPAIGN VAULT ----------------
     function setCampaignFilter(filter, btn) {
       state.campaignFilter = filter;
       document.querySelectorAll("#view-campaigns .filter-chip").forEach(c => c.classList.remove("active"));
@@ -1330,6 +1718,7 @@
     function closeModal() { document.getElementById("app-modal").classList.remove("open"); }
     function closeModalOnBackdrop(e) { if (e.target.id === "app-modal") closeModal(); }
 
+    // ---------------- LAB & QUIZ ----------------
     function updateBriefPreview() {
       document.getElementById("prev-name").textContent = document.getElementById("brief-name").value || "—";
       document.getElementById("prev-audience").textContent = document.getElementById("brief-audience").value || "—";
@@ -1440,10 +1829,12 @@ Tagline Territory: ${document.getElementById("prev-tagline").textContent}`;
     function nextQuestion() { quizIdx++; quizAnswered = false; renderQuiz(); }
     function resetQuiz() { quizIdx = 0; quizScore = 0; quizAnswered = false; renderQuiz(); }
 
+    // ---------------- INIT ----------------
     renderBasics();
     renderPhases();
     renderCampaigns();
     renderAuditSliders();
+    renderStudyNotes();
     renderQuiz();
     renderLiveTrends();
     renderHomeLivePreview();
