@@ -3,7 +3,7 @@
 A personal desktop & web application built with **Electron**, **Node.js**, and **Vanilla JavaScript** that brings **Alina Wheeler & Rob Meyerson's *Designing Brand Identity (6th Edition)*** together with a real-time startup and marketing trend engine.
 
 ## Live Demo
-> Add your Render URL here once deployed: `https://marketing-adda.onrender.com`
+https://marketing-adda.onrender.com/
 
 ## Features
 - **Live Trend Pulse:** Aggregates real-time feeds (Google News India/Global, Inc42, YourStory, Reddit, Hacker News) using a custom zero-dependency Node.js RSS/XML parser and maps every story to Wheeler's 5-Phase Identity Process.
