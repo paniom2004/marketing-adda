@@ -4,18 +4,34 @@ const fs = require("fs");
 const path = require("path");
 
 const PUBLIC_DIR = path.join(__dirname, "public");
-const CACHE_TTL_MS = 5 * 60 * 1000;
+const CACHE_TTL_MS = 2 * 60 * 1000; // Refresh every 2 minutes for high velocity
 
+// High-signal Indian & Global Marketing, Brand Campaign & Startup Feeds
 const RSS_SOURCES = [
   {
-    name: "India Brand Campaigns",
+    name: "India Ad & Brand Trade",
     type: "Campaign",
-    url: "https://news.google.com/rss/search?q=%22brand+campaign%22+OR+%22ad+campaign%22+India&hl=en-IN&gl=IN&ceid=IN:en"
+    url: "https://news.google.com/rss/search?q=(site%3Aexchange4media.com%20OR%20site%3Aafaqs.com%20OR%20site%3Asocialsamosa.com%20OR%20site%3Acampaignindia.in%20OR%20site%3Abrandequity.economictimes.indiatimes.com)%20when%3A2d&hl=en-IN&gl=IN&ceid=IN:en"
+  },
+  {
+    name: "India Campaigns & D2C",
+    type: "Campaign",
+    url: "https://news.google.com/rss/search?q=(%22brand%20campaign%22%20OR%20%22ad%20campaign%22%20OR%20%22marketing%20campaign%22%20OR%20%22D2C%20brand%22)%20India%20when%3A3d&hl=en-IN&gl=IN&ceid=IN:en"
+  },
+  {
+    name: "Global Rebrands & Design",
+    type: "Rebrand",
+    url: "https://news.google.com/rss/search?q=(rebrand%20OR%20%22brand%20identity%22%20OR%20%22new%20logo%22%20OR%20%22packaging%20design%22)%20when%3A4d&hl=en-US&gl=US&ceid=US:en"
   },
   {
     name: "Booming Indian Startups",
     type: "Startup",
-    url: "https://news.google.com/rss/search?q=%22Indian+startup%22+OR+%22D2C+brand%22+funding+OR+launch&hl=en-IN&gl=IN&ceid=IN:en"
+    url: "https://news.google.com/rss/search?q=(startup%20OR%20D2C%20OR%20unicorn%20OR%20%22raises%22)%20India%20when%3A2d&hl=en-IN&gl=IN&ceid=IN:en"
+  },
+  {
+    name: "Entrackr",
+    type: "Startup",
+    url: "https://entrackr.com/rss"
   },
   {
     name: "Inc42 Startups",
@@ -26,11 +42,6 @@ const RSS_SOURCES = [
     name: "YourStory",
     type: "Startup",
     url: "https://yourstory.com/feed"
-  },
-  {
-    name: "Global Rebrands & Identity",
-    type: "Rebrand",
-    url: "https://news.google.com/rss/search?q=%22rebrand%22+OR+%22brand+identity%22+OR+%22new+logo%22&hl=en-US&gl=US&ceid=US:en"
   }
 ];
 
@@ -60,7 +71,7 @@ function fetchUrl(targetUrl, redirectsLeft = 5) {
       targetUrl,
       {
         headers: {
-          "User-Agent": "MarketingAdda/1.0 (Brand Strategy Studio)",
+          "User-Agent": "MarketingAdda/2.0 (Brand Strategy Studio)",
           "Accept": "application/rss+xml, application/xml, application/json, text/xml, */*"
         },
         timeout: 10000
@@ -115,6 +126,10 @@ function extractTag(block, tag) {
   return match ? decodeEntities(match[1]) : "";
 }
 
+function isNoisyFinancialPost(title = "") {
+  return /\b(q[1-4]\s*results|net\s*profit|profit\s*tanks|profit\s*jumps|ebitda|share\s*price|sensex|nifty|dividend|quarterly\s*earnings|pat\s*rises|pat\s*falls)\b/i.test(title);
+}
+
 function parseFeedXml(xml, fallbackSource, defaultType) {
   const items = [];
   const itemMatches =
@@ -122,7 +137,7 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
     xml.match(/<entry\b[\s\S]*?<\/entry>/gi) ||
     [];
 
-  for (const block of itemMatches.slice(0, 7)) {
+  for (const block of itemMatches.slice(0, 10)) {
     const title = extractTag(block, "title");
     let link = extractTag(block, "link");
     if (!link) {
@@ -139,12 +154,22 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
       extractTag(block, "content");
     const sourceTag = extractTag(block, "source") || fallbackSource;
 
-    if (!title || !link) continue;
+    if (!title || !link || isNoisyFinancialPost(title)) continue;
 
     const parsedDate =
       pubDateRaw && !isNaN(Date.parse(pubDateRaw))
         ? new Date(pubDateRaw).toISOString()
         : new Date().toISOString();
+
+    // Avoid repeating the exact same title as the snippet (common in Google News RSS)
+    const normalizedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
+    const normalizedDesc = description.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
+    let cleanSnippet = description;
+    if (!cleanSnippet || (normalizedTitle && normalizedDesc.startsWith(normalizedTitle))) {
+      cleanSnippet = `Live industry update from ${sourceTag}. Open the source article to inspect the audience insight, positioning, and creative rollout.`;
+    } else if (cleanSnippet.length > 190) {
+      cleanSnippet = cleanSnippet.slice(0, 187) + "...";
+    }
 
     items.push({
       id: "sig_" + Buffer.from(link).toString("base64").replace(/[^a-zA-Z0-9]/g, "").slice(-14),
@@ -152,10 +177,7 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
       source: sourceTag,
       pubDate: parsedDate,
       link,
-      snippet:
-        description.length > 190
-          ? description.slice(0, 187) + "..."
-          : description || "Click original source to inspect the full campaign or startup launch.",
+      snippet: cleanSnippet,
       signalType: defaultType
     });
   }
@@ -163,12 +185,12 @@ function parseFeedXml(xml, fallbackSource, defaultType) {
 }
 
 function classifyWithWheeler(item) {
-  const text = `${item.title} ${item.snippet}`.toLowerCase();
+  const text = `${item.title} ${item.snippet} ${item.source}`.toLowerCase();
 
   let signalType = item.signalType || "Startup";
-  if (/rebrand|logo|wordmark|redesign|identity|packaging|typography|mascot/.test(text)) {
+  if (/rebrand|logo|wordmark|redesign|identity|packaging|typography|mascot|visual/.test(text)) {
     signalType = "Rebrand";
-  } else if (/campaign|ad |ads |commercial|film|festive|ipl|influencer|marketing|viral/.test(text)) {
+  } else if (/campaign|ad |ads |commercial|film|festive|ipl|influencer|marketing|viral|exchange4media|afaqs|socialsamosa|campaignindia|brandequity|brand ambassador/.test(text)) {
     signalType = "Campaign";
   } else if (/startup|funding|raises|d2c|launch|unicorn|ipo|series [a-z]|founder/.test(text)) {
     signalType = "Startup";
@@ -180,7 +202,7 @@ function classifyWithWheeler(item) {
   if (/rebrand|logo|color|font|typography|packaging|design|visual|mascot|sonic/.test(text)) {
     wheelerPhase = "Phase 3: Designing Identity";
     phaseReason = "Demonstrates visual/sensory identity redesign and look-and-feel execution.";
-  } else if (/campaign|ad |commercial|billboard|social|video|unboxing|website|app|retail|store/.test(text)) {
+  } else if (/campaign|ad |commercial|billboard|social|video|unboxing|website|app|retail|store|ambassador|influencer|film/.test(text)) {
     wheelerPhase = "Phase 4: Creating Touchpoints";
     phaseReason = "Shows brand strategy translated into live customer touchpoints & campaigns.";
   } else if (/survey|report|study|consumer|research|trend|behavior|audit|data/.test(text)) {
@@ -195,48 +217,10 @@ function classifyWithWheeler(item) {
   if (/\bai\b|artificial intelligence|genai|llm|automation/.test(text)) dynamic6th = "6th Ed. AI & Automation";
   else if (/sustainab|green|eco|climate|plastic|ev|electric/.test(text)) dynamic6th = "6th Ed. Sustainability";
   else if (/rebrand|redesign|logo/.test(text)) dynamic6th = "6th Ed. Before & After Rebrand";
-  else if (/creator|influencer|meme|viral|gen z/.test(text)) dynamic6th = "6th Ed. Social & Cultural Agility";
+  else if (/creator|influencer|meme|viral|gen z|ambassador/.test(text)) dynamic6th = "6th Ed. Social & Cultural Agility";
   else if (/funding|d2c|bharat|quick commerce|upi/.test(text)) dynamic6th = "Startup Positioning & Scale";
 
   return { ...item, signalType, wheelerPhase, phaseReason, dynamic6th };
-}
-
-async function fetchHackerNews() {
-  const raw = await fetchUrl(
-    "https://hn.algolia.com/api/v1/search_by_date?query=startup%20OR%20branding%20OR%20marketing%20OR%20rebrand&tags=story&hitsPerPage=6"
-  );
-  const json = JSON.parse(raw);
-  return (json.hits || [])
-    .filter((h) => h.title)
-    .map((h) => ({
-      id: `hn_${h.objectID}`,
-      title: h.title,
-      source: "Hacker News Live",
-      pubDate: h.created_at || new Date().toISOString(),
-      link: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
-      snippet: `Live startup & tech buzz (${h.points || 0} points · ${h.num_comments || 0} comments).`,
-      signalType: "Startup"
-    }));
-}
-
-async function fetchReddit(subreddit, label, type) {
-  const raw = await fetchUrl(`https://www.reddit.com/r/${subreddit}/hot.json?limit=5`);
-  const json = JSON.parse(raw);
-  const posts = (json.data && json.data.children) || [];
-  return posts
-    .map((c) => c.data)
-    .filter((p) => p && !p.stickied && p.title)
-    .map((p) => ({
-      id: `rd_${p.id}`,
-      title: p.title,
-      source: label,
-      pubDate: new Date((p.created_utc || Date.now() / 1000) * 1000).toISOString(),
-      link: `https://www.reddit.com${p.permalink}`,
-      snippet:
-        (p.selftext || "").replace(/\s+/g, " ").trim().slice(0, 180) ||
-        `Trending discussion in ${label} (${p.ups || 0} upvotes).`,
-      signalType: type
-    }));
 }
 
 function startServer(dataDir, requestedPort = 3000, host = "127.0.0.1") {
@@ -258,17 +242,13 @@ function startServer(dataDir, requestedPort = 3000, host = "127.0.0.1") {
 
     if (!force && isFresh) return memoryCache;
 
-    const tasks = [
-      ...RSS_SOURCES.map(async (src) => {
+    const settled = await Promise.allSettled(
+      RSS_SOURCES.map(async (src) => {
         const xml = await fetchUrl(src.url);
         return parseFeedXml(xml, src.name, src.type);
-      }),
-      fetchHackerNews(),
-      fetchReddit("marketing", "r/marketing", "Campaign"),
-      fetchReddit("IndianStartups", "r/IndianStartups", "Startup")
-    ];
+      })
+    );
 
-    const settled = await Promise.allSettled(tasks);
     let sourcesActive = 0;
     const collected = [];
 
@@ -295,7 +275,7 @@ function startServer(dataDir, requestedPort = 3000, host = "127.0.0.1") {
       memoryCache = {
         updatedAt: new Date().toISOString(),
         sourcesActive,
-        signals: unique.slice(0, 40)
+        signals: unique.slice(0, 45)
       };
       saveJsonFile(CACHE_FILE, memoryCache);
     }
